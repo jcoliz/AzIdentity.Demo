@@ -13,7 +13,7 @@
         <RouterLink class="nav-link" to="/about">About</RouterLink>
       </ul>
       
-      <LoginState v-if="false"/>
+      <LoginState/>
     </header>
   </div>
 </template>

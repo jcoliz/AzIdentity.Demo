@@ -6,22 +6,32 @@
 
 import { Dropdown } from 'bootstrap';
 
+const slots = useSlots()
+
 const toggleEl = ref<HTMLElement>();
 const dropdown = ref<Dropdown>();
 
 onMounted(()=>{
-    if (toggleEl.value && ! Dropdown.getInstance(toggleEl.value))
+    const tslot = slots.trigger;
+    if (tslot)
     {
-        dropdown.value = new Dropdown(toggleEl.value);        
+        const nodes = tslot();
+        const node = nodes[0];
+        const el = node.el as HTMLElement;
+        toggleEl.value = el;
+        console.log("el:", el)
+
+        if (toggleEl.value && ! Dropdown.getInstance(toggleEl.value))
+        {
+            dropdown.value = new Dropdown(toggleEl.value);        
+        }
     }
 })
 
 </script>
 <template>
     <div class="dropdown">
-    <button ref="toggleEl" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Dropdown button
-    </button>
-    <slot/>
+        <slot name="trigger" :class="'dropdown-toggle'" :aria-expanded="false"/>
+        <slot/>
     </div>    
 </template>

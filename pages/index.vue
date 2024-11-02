@@ -6,7 +6,12 @@ import BaseDropDown from '~/components/BaseDropDown.vue';
     <h1>Home</h1>
 
     <ClientOnly fallback-tag="span">
-        <BaseDropDown>
+        <BaseDropDown class="mb-3">
+            <template v-slot:trigger="slotProps">
+                <button v-bind="slotProps" class="btn btn-secondary" data-bs-toggle="dropdown" type="button" >
+                    Dropdown button
+                </button>                
+            </template>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item">Action</a></li>
                 <li><a class="dropdown-item">Another action</a></li>
