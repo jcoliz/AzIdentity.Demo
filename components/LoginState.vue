@@ -49,7 +49,7 @@ onUnmounted(() => {
             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
           </button>
           <ul v-if="showing && isLoggedIn" class="dropdown-menu text-small show" style="">
-            <li><a class="dropdown-item" >Profile</a></li>
+            <li><RouterLink class="dropdown-item" to="/profile" >Profile</RouterLink></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" @click="logout()" >Sign out</a></li>
           </ul>
