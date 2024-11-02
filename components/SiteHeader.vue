@@ -12,8 +12,8 @@
         <RouterLink class="nav-link" to="/faq">FAQs</RouterLink>
         <RouterLink class="nav-link" to="/about">About</RouterLink>
       </ul>
-
-      <LoginState/>
+      
+      <LoginState v-if="false"/>
     </header>
   </div>
 </template>
