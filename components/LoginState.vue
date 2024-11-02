@@ -22,8 +22,8 @@ function logout()
             <template v-slot:trigger="slotProps">
                 <a v-bind="slotProps" class="d-flex align-items-center link-body-emphasis text-decoration-none p-0" data-bs-toggle="dropdown">
                     <template v-if="isLoggedIn">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2" style="background-color: aqua;">
-                        <strong>mdo</strong>
+                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <strong>User Name</strong>
                     </template>                
                     <FeatherIcon v-else icon="user" size="24" class="rounded-circle me-2"/>
                 </a>
@@ -40,7 +40,7 @@ function logout()
             </ul>
         </BaseDropDown>
         <template #fallback>
-            <FeatherIcon icon="user" size="24" class="ms-2 my-1 rounded-circle dropdown-toggle"/>
+            <FeatherIcon icon="user" size="24" class="ms-2 my-1 dropdown-toggle"/>
         </template>
     </ClientOnly>
 </template>
