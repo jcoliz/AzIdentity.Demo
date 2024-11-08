@@ -52,7 +52,7 @@ export function useMsalAuth() {
             });
     }
 
-    async function getTokenPopup(request:any): Promise<AuthenticationResult|undefined> {
+    async function getTokenPopup(request:any): Promise<AuthenticationResult|void> {
 
         /**
          * See here for more info on account retrieval: 
@@ -72,16 +72,14 @@ export function useMsalAuth() {
                             return tokenResponse;
                         }).catch((error:any) => {
                             console.error("acquireTokenPopup: ERROR", error);
-                            return undefined
                         });
                 } else {
                     console.warn(error)
-                    return undefined
                 }
         });
     }
      
-    async function getProfile(): Promise<Map<string,any>|undefined> {
+    async function getProfile(): Promise<Map<string,any>|void> {
 
         const tokenRequest = {
             scopes: ["User.Read"],
@@ -90,20 +88,15 @@ export function useMsalAuth() {
         };
     
         return getTokenPopup(tokenRequest)
-            .then(async (response:AuthenticationResult|undefined): Promise<any> => {
+            .then(async (response:AuthenticationResult|void): Promise<any> => {
                 if (response)
                 {
                     const me = await callMSGraph("https://graph.microsoft.com/v1.0/me", response.accessToken);
                     console.log("getProfile: OK", me)
                     return Object.entries(me)    
                 }
-                else
-                {
-                    return undefined
-                }
             }).catch((error:any) => {
                 console.error("getProfile: ERROR", error);
-                return undefined
             });                 
     }
 
