@@ -1,11 +1,20 @@
 // https://github.com/Azure-Samples/ms-identity-ciam-javascript-tutorial/blob/main/1-Authentication/0-sign-in-vanillajs/App/public/authConfig.js
+// https://github.com/Shivanik97/msal-auth-vue/blob/main/src/config/msalConfig.ts
 
-/**
+import {
+    PublicClientApplication,
+    type AccountInfo,
+    type RedirectRequest,
+    LogLevel
+  } from "@azure/msal-browser"
+  import { reactive } from 'vue'
+
+  /**
  * Configuration object to be passed to MSAL instance on creation. 
  * For a full list of MSAL.js configuration parameters, visit:
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/configuration.md 
  */
-const msalConfig = {
+export const msalConfig = {
     auth: {
         clientId: 'Enter_the_Application_Id_Here', // This is the ONLY mandatory field that you need to supply.
         authority: 'https://Enter_the_Tenant_Subdomain_Here.ciamlogin.com/', // Replace the placeholder with your tenant subdomain        
@@ -18,21 +27,21 @@ const msalConfig = {
     },
     system: {
         loggerOptions: {
-            loggerCallback: (level, message, containsPii) => {
+            loggerCallback: (level:LogLevel, message:string, containsPii:boolean) => {
                 if (containsPii) {
                     return;
                 }
                 switch (level) {
-                    case msal.LogLevel.Error:
+                    case LogLevel.Error:
                         console.error(message);
                         return;
-                    case msal.LogLevel.Info:
+                    case LogLevel.Info:
                         console.info(message);
                         return;
-                    case msal.LogLevel.Verbose:
+                    case LogLevel.Verbose:
                         console.debug(message);
                         return;
-                    case msal.LogLevel.Warning:
+                    case LogLevel.Warning:
                         console.warn(message);
                         return;
                 }
@@ -47,8 +56,8 @@ const msalConfig = {
  * For more information about OIDC scopes, visit: 
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
-const loginRequest = {
-    scopes: [],
+export const graphScopes: RedirectRequest  = {
+    scopes: [ "User.Read" ],
 };
 
 /**
@@ -61,10 +70,9 @@ const loginRequest = {
 //   loginHint: "example@domain.net"
 // };
 
-// exporting config object for jest
-if (typeof exports !== 'undefined') {
-    module.exports = {
-        msalConfig: msalConfig,
-        loginRequest: loginRequest,
-    };
-}
+export const state = reactive({
+    isAuthenticated: false,
+    user: null as AccountInfo | null
+  })
+  
+  export const msalInstance = new PublicClientApplication(msalConfig)

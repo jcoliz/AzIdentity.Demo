@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@azure/msal-react':
-        specifier: ^2.2.0
-        version: 2.2.0(@azure/msal-browser@3.27.0)(react@18.3.1)
+      '@azure/msal-browser':
+        specifier: ^3.27.0
+        version: 3.27.0
       '@types/bootstrap':
         specifier: ^5.2.10
         version: 5.2.10
@@ -33,6 +33,9 @@ importers:
         specifier: latest
         version: 4.4.5(vue@3.5.12(typescript@5.6.3))
     devDependencies:
+      '@azure/msal-common':
+        specifier: ^14.16.0
+        version: 14.16.0
       '@types/feather-icons':
         specifier: ^4.29.4
         version: 4.29.4
@@ -62,13 +65,6 @@ packages:
   '@azure/msal-common@14.16.0':
     resolution: {integrity: sha512-1KOZj9IpcDSwpNiQNjt0jDYZpQvNZay7QAEi/5DLubay40iGYtLzya/jbjRPLyOTZhEKyL1MzPuw2HqBCjceYA==}
     engines: {node: '>=0.8.0'}
-
-  '@azure/msal-react@2.2.0':
-    resolution: {integrity: sha512-2V+9JXeXyyjYNF92y5u0tU4el9px/V1+vkRuN+DtoxyiMHCtYQpJoaFdGWArh43zhz5aqQqiGW/iajPDSu3QsQ==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      '@azure/msal-browser': ^3.27.0
-      react: ^16.8.0 || ^17 || ^18
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -3148,10 +3144,6 @@ packages:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
 
-  loose-envify@1.4.0:
-    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
-    hasBin: true
-
   loupe@3.1.2:
     resolution: {integrity: sha512-23I4pFZHmAemUnz8WZXbYRSKYj801VDaNv9ETuMh7IrMc7VuVVSo+Z9iLE3ni30+U48iDWfi30d3twAXBYmnCg==}
 
@@ -3985,10 +3977,6 @@ packages:
 
   rc9@2.1.2:
     resolution: {integrity: sha512-btXCnMmRIBINM2LDZoEmOogIZU7Qe7zn4BpomSKZ/ykbLObuBdvG+mFq11DL6fjH1DRwHhrlgtYWG96bJiC7Cg==}
-
-  react@18.3.1:
-    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
-    engines: {node: '>=0.10.0'}
 
   read-only-stream@2.0.0:
     resolution: {integrity: sha512-3ALe0bjBVZtkdWKIcThYpQCLbBMd/+Tbh2CDSrAIDO3UsZ4Xs+tnyjv2MjCOMMgBG+AsUOeuP1cgtY1INISc8w==}
@@ -5023,11 +5011,6 @@ snapshots:
       '@azure/msal-common': 14.16.0
 
   '@azure/msal-common@14.16.0': {}
-
-  '@azure/msal-react@2.2.0(@azure/msal-browser@3.27.0)(react@18.3.1)':
-    dependencies:
-      '@azure/msal-browser': 3.27.0
-      react: 18.3.1
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -8514,10 +8497,6 @@ snapshots:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
-  loose-envify@1.4.0:
-    dependencies:
-      js-tokens: 4.0.0
-
   loupe@3.1.2: {}
 
   lowercase-keys@2.0.0:
@@ -9544,10 +9523,6 @@ snapshots:
     dependencies:
       defu: 6.1.4
       destr: 2.0.3
-
-  react@18.3.1:
-    dependencies:
-      loose-envify: 1.4.0
 
   read-only-stream@2.0.0:
     dependencies:
