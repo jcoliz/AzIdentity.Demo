@@ -3,13 +3,16 @@ import BaseDropDown from '~/components/BaseDropDown.vue';
 
 const auth = useMsalAuth()
 
+const profile = ref<Map<string,any>|undefined>(undefined);
+
 onMounted(()=>{
     auth.initialize()
 })
 
-function login()
+async function login()
 {
-    auth.login()
+    await auth.login()
+    profile.value = await auth.getProfile()
 }
 
 function logout()
@@ -43,7 +46,9 @@ function logout()
 
     <div v-if="auth.account.value">
         <p>Name: {{ auth.account.value.username }}</p>
-
+        <ul v-if="profile">
+            <li v-for="[key, value] in profile" :key="key">{{ key }}: {{ value }}</li>
+        </ul>
     </div>
     <div v-else>
         <p>No user logged in</p>
