@@ -9,5 +9,8 @@ export default defineNuxtConfig({
     options: {
       linkActiveClass: 'active'
     }
+  },
+  typescript: {
+    typeCheck: true
   }
 })
