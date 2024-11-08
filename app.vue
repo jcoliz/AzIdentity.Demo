@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { Dropdown } from "bootstrap"
-//window.Dropdown = Dropdown
-
 useHead({
   htmlAttrs: {
     lang: "en",
