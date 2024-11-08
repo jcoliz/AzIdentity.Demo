@@ -2,8 +2,7 @@
 import BaseDropDown from '~/components/BaseDropDown.vue';
 
 const auth = useMsalAuth()
-
-const profile = ref<Map<string,any>|undefined>(undefined);
+const identityStore = useIdentityStore()
 
 onMounted(()=>{
     auth.initialize()
@@ -12,7 +11,7 @@ onMounted(()=>{
 async function login()
 {
     await auth.login()
-    profile.value = await auth.getProfile()
+    identityStore.profile = await auth.getProfile()
 }
 
 function logout()
@@ -44,10 +43,10 @@ function logout()
         </template>
     </ClientOnly>
 
-    <div v-if="auth.account.value">
-        <p>Name: {{ auth.account.value.username }}</p>
-        <ul v-if="profile">
-            <li v-for="[key, value] in profile" :key="key">{{ key }}: {{ value }}</li>
+    <div v-if="identityStore.account">
+        <p>Name: {{ identityStore.account.username }}</p>
+        <ul v-if="identityStore.profile">
+            <li v-for="[key, value] in identityStore.profile" :key="key">{{ key }}: {{ value }}</li>
         </ul>
     </div>
     <div v-else>

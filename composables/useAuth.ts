@@ -1,12 +1,12 @@
 // https://github.com/Shivanik97/msal-auth-vue/blob/main/src/config/useAuth.ts
 
 import { msalConfig, graphScopes } from '@/config/msalConfig'
-import { PublicClientApplication, InteractionRequiredAuthError, type AccountInfo, type AuthenticationResult } from "@azure/msal-browser"
+import { PublicClientApplication, InteractionRequiredAuthError, type AuthenticationResult } from "@azure/msal-browser"
 
 export function useMsalAuth() {
     const msalInstance = new PublicClientApplication(msalConfig)
 
-    const account = ref<AccountInfo|undefined>(undefined)
+    const identityStore = useIdentityStore()
 
     async function initialize(): Promise<void> {
         msalInstance.initialize()
@@ -28,7 +28,7 @@ export function useMsalAuth() {
         await msalInstance.loginPopup({ scopes: graphScopes })
             .then((result:AuthenticationResult)=> {
                 console.log("AuthenticationResult: OK", result)
-                account.value = result.account        
+                identityStore.account = result.account        
             })
             .catch((error:any) => {
                 console.error("loginPopup", error)
@@ -45,7 +45,7 @@ export function useMsalAuth() {
         await msalInstance.logoutPopup()
             .then(()=> {
                 console.log("logoutPopup: OK")
-                account.value = undefined
+                identityStore.account = undefined
             })
             .catch((error:any) => {
                 console.error("logoutPopup:", error)
@@ -86,7 +86,7 @@ export function useMsalAuth() {
         const tokenRequest = {
             scopes: ["User.Read"],
             forceRefresh: false, // Set this to "true" to skip a cached token and go to the server to get a new token
-            account: account.value
+            account: identityStore.account
         };
     
         return getTokenPopup(tokenRequest)
@@ -107,5 +107,5 @@ export function useMsalAuth() {
             });                 
     }
 
-    return { initialize, login, logout, getProfile, account }
+    return { initialize, login, logout, getProfile }
 }
