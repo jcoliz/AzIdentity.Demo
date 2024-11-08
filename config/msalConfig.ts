@@ -2,12 +2,8 @@
 // https://github.com/Shivanik97/msal-auth-vue/blob/main/src/config/msalConfig.ts
 
 import {
-    PublicClientApplication,
-    type AccountInfo,
-    type RedirectRequest,
     LogLevel
   } from "@azure/msal-browser"
-  import { reactive } from 'vue'
 
   /**
  * Configuration object to be passed to MSAL instance on creation. 
@@ -16,10 +12,9 @@ import {
  */
 export const msalConfig = {
     auth: {
-        clientId: 'Enter_the_Application_Id_Here', // This is the ONLY mandatory field that you need to supply.
-        authority: 'https://Enter_the_Tenant_Subdomain_Here.ciamlogin.com/', // Replace the placeholder with your tenant subdomain        
-        redirectUri: 'http://localhost:3000/redirect', // You must register this URI on Microsoft Entra admin center/App Registration. Defaults to window.location.href e.g. http://localhost:3000/
-        navigateToLoginRequestUrl: true, // If "true", will navigate back to the original request location before processing the auth code response.
+        clientId: 'fc9ca57e-4cc4-443b-99c4-495272142075', // This is the ONLY mandatory field that you need to supply.
+        authority: 'https://login.microsoftonline.com/organizations', // Replace the placeholder with your tenant subdomain        
+        redirectUri: 'http://localhost:3000/', // You must register this URI on Microsoft Entra admin center/App Registration. Defaults to window.location.href e.g. http://localhost:3000/
     },
     cache: {
         cacheLocation: 'sessionStorage', // Configures cache location. "sessionStorage" is more secure, but "localStorage" gives you SSO.
@@ -56,9 +51,7 @@ export const msalConfig = {
  * For more information about OIDC scopes, visit: 
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
-export const graphScopes: RedirectRequest  = {
-    scopes: [ "User.Read" ],
-};
+export const graphScopes: string[] = [ "User.Read" ];
 
 /**
  * An optional silentRequest object can be used to achieve silent SSO
@@ -69,10 +62,3 @@ export const graphScopes: RedirectRequest  = {
 //   scopes: ["openid", "profile"],
 //   loginHint: "example@domain.net"
 // };
-
-export const state = reactive({
-    isAuthenticated: false,
-    user: null as AccountInfo | null
-  })
-  
-  export const msalInstance = new PublicClientApplication(msalConfig)
