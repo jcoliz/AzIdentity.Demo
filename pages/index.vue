@@ -40,4 +40,12 @@ function logout()
             </button>
         </template>
     </ClientOnly>
+
+    <div v-if="auth.account.value">
+        <p>Name: {{ auth.account.value.username }}</p>
+
+    </div>
+    <div v-else>
+        <p>No user logged in</p>
+    </div>
 </template>
