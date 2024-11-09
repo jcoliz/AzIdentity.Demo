@@ -6,9 +6,7 @@ import { PublicClientApplication, InteractionRequiredAuthError, type Authenticat
 export function useMsalAuth() {
 
     const appConfig = useAppConfig()
-    msalConfig.auth.authority = appConfig.auth.authority
-    msalConfig.auth.clientId = appConfig.auth.clientId
-    msalConfig.auth.redirectUri = appConfig.auth.redirectUri
+    msalConfig.auth = appConfig.msal
     const msalInstance = new PublicClientApplication(msalConfig)
 
     const identityStore = useIdentityStore()
