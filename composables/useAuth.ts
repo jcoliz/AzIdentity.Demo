@@ -4,6 +4,11 @@ import { msalConfig, graphScopes } from '@/config/msalConfig'
 import { PublicClientApplication, InteractionRequiredAuthError, type AuthenticationResult } from "@azure/msal-browser"
 
 export function useMsalAuth() {
+
+    const appConfig = useAppConfig()
+    msalConfig.auth.authority = appConfig.auth.authority
+    msalConfig.auth.clientId = appConfig.auth.clientId
+    msalConfig.auth.redirectUri = appConfig.auth.redirectUri
     const msalInstance = new PublicClientApplication(msalConfig)
 
     const identityStore = useIdentityStore()
