@@ -17,14 +17,14 @@ const appConfig = useAppConfig()
     <BaseSectionHeader>Logged-in Account</BaseSectionHeader>
 
     <ul v-if="identityStore.account">
-        <li v-for="[key, value] in Object.entries(identityStore.account)" :key="key">{{ key }}: {{ value }}</li>
+        <li v-for="[key, value] in Object.entries(identityStore.account)" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
     </ul>
     <p v-else>Not logged in</p>
 
     <BaseSectionHeader>Auth Token</BaseSectionHeader>
 
     <ul v-if="identityStore.claims">
-        <li v-for="[key, value] in identityStore.claims" :key="key">{{ key }}: {{ value }}</li>
+        <li v-for="[key, value] in identityStore.claims" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
     </ul>
     <p v-else>No current token</p>
 
