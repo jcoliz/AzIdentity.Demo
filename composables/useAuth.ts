@@ -2,6 +2,7 @@
 
 import { msalConfig, graphScopes } from '@/config/msalConfig'
 import { PublicClientApplication, InteractionRequiredAuthError, type AuthenticationResult } from "@azure/msal-browser"
+import { identifierToKeywordKind, unescapeLeadingUnderscores } from 'typescript'
 
 export function useMsalAuth() {
 
@@ -30,7 +31,7 @@ export function useMsalAuth() {
 
         await msalInstance.loginPopup({ scopes: graphScopes })
             .then((result:AuthenticationResult)=> {
-                console.log("AuthenticationResult: OK", result)
+                console.log("AuthenticationResult: OK")
                 identityStore.account = result.account        
             })
             .catch((error:any) => {
@@ -45,10 +46,14 @@ export function useMsalAuth() {
          * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/request-response-object.md#request
          */
 
+        // TODO: identityStore.clear() would be better
+        identityStore.account = undefined
+        identityStore.profile = undefined
+        identityStore.photo = undefined
+
         await msalInstance.logoutPopup()
             .then(()=> {
                 console.log("logoutPopup: OK")
-                identityStore.account = undefined
             })
             .catch((error:any) => {
                 console.error("logoutPopup:", error)
@@ -82,7 +87,8 @@ export function useMsalAuth() {
         });
     }
      
-    async function getProfile(): Promise<Map<string,any>|void> {
+    // TODO: These graph calls need to be moved out to own file
+    async function getProfile(): Promise<void> {
 
         const tokenRequest = {
             scopes: ["User.Read"],
@@ -94,15 +100,40 @@ export function useMsalAuth() {
             .then(async (response:AuthenticationResult|void): Promise<any> => {
                 if (response)
                 {
-                    const me = await callMSGraph("https://graph.microsoft.com/v1.0/me", response.accessToken);
                     identityStore.claims = Object.entries(response.idTokenClaims)
+
+                    const me = await callMSGraph("https://graph.microsoft.com/v1.0/me", response.accessToken);
                     console.log("getProfile: OK", me)
-                    return Object.entries(me)
+                    identityStore.profile = Object.entries(me)
                 }
             }).catch((error:any) => {
-                console.error("getProfile: ERROR", error);
+                identityStore.claims = undefined
+                identityStore.profile = undefined
+                console.error("getProfile: ERROR", error)
+            });
+    }
+
+    // Get the users' photo and store in identitystore
+    async function getUserPhoto(): Promise<void> {
+
+        const tokenRequest = {
+            scopes: ["User.Read"],
+            forceRefresh: false, // Set this to "true" to skip a cached token and go to the server to get a new token
+            account: identityStore.account
+        };
+    
+        getTokenPopup(tokenRequest)
+            .then(async (response:AuthenticationResult|void): Promise<string|void> => {
+                if (response)
+                {
+                    const imageData = await callMSGraphImage("https://graph.microsoft.com/v1.0/me/photos/48x48/$value", response.accessToken);
+                    identityStore.photo = imageData
+                }
+            }).catch((error:any) => {
+                identityStore.photo = undefined
+                console.error("getUserPhoto: ERROR", error);
             });                 
     }
 
-    return { initialize, login, logout, getProfile }
+    return { initialize, login, logout, getProfile, getUserPhoto }
 }

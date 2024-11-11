@@ -5,7 +5,7 @@
 
 const auth = useMsalAuth()
 const identityStore = useIdentityStore()
-
+ 
 onMounted(()=>{
     auth.initialize()
 })
@@ -13,7 +13,8 @@ onMounted(()=>{
 async function login()
 {
     await auth.login()
-    identityStore.profile = await auth.getProfile()
+    await auth.getProfile()
+    await auth.getUserPhoto();
 }
 
 function logout()
@@ -27,7 +28,7 @@ function logout()
         <template #trigger>
             <a class="d-flex align-items-center link-body-emphasis text-decoration-none p-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <template v-if="identityStore.account">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <img v-if="identityStore.photo" :src="identityStore.photo" alt="" width="32" height="32" class="rounded-circle me-2">
                     <strong>{{ identityStore.account.name }}</strong>
                 </template>                
                 <FeatherIcon v-else icon="user" size="24" class="rounded-circle me-2"/>
