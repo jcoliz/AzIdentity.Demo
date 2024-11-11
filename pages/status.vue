@@ -14,6 +14,13 @@ const appConfig = useAppConfig()
         <li><strong>URL</strong>: {{ appConfig.msal.redirectUri }}</li>
     </ul>
 
+    <h3>Logged-in Account</h3>
+
+    <ul v-if="identityStore.account">
+        <li v-for="[key, value] in Object.entries(identityStore.account)" :key="key">{{ key }}: {{ value }}</li>
+    </ul>
+    <p v-else>Not logged in</p>
+
     <h3>Auth Token</h3>
 
     <ul v-if="identityStore.claims">

@@ -17,7 +17,7 @@ function logout()
 
 </script>
 <template>
-    <TestComp class="ms-2 my-1">
+    <BaseDropDown class="ms-2 my-1">
         <template #trigger>
             <a class="d-flex align-items-center link-body-emphasis text-decoration-none p-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <template v-if="isLoggedIn">
@@ -39,5 +39,5 @@ function logout()
                 </template>
             </ul>
         </template>
-    </TestComp>
+    </BaseDropDown>
 </template>
