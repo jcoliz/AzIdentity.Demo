@@ -1,3 +1,4 @@
 <template>
-    <h1>Pricing</h1>
+    <h1>About</h1>
+    <ComingSoon/>
 </template>
