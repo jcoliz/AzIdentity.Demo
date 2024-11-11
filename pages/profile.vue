@@ -8,6 +8,7 @@ const identityStore = useIdentityStore()
         <ul v-if="identityStore.profile">
             <li v-for="[key, value] in identityStore.profile" :key="key">{{ key }}: {{ value }}</li>
         </ul>
+        <LogoutButton/>
     </div>
     <div v-else>
         <h1>Profile</h1>
