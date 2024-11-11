@@ -1,4 +1,4 @@
 <template>
-    <h1>Features</h1>
+    <BasePageHeader>Features</BasePageHeader>
     <ComingSoon/>
 </template>
