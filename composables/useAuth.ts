@@ -2,13 +2,19 @@
 
 import { msalConfig, graphScopes } from '@/config/msalConfig'
 import { PublicClientApplication, InteractionRequiredAuthError, type AuthenticationResult } from "@azure/msal-browser"
-import { identifierToKeywordKind, unescapeLeadingUnderscores } from 'typescript'
 
 export function useMsalAuth() {
 
+    // Fetch deployment-specific MSAL configuration details from Nuxt app config
+
     const appConfig = useAppConfig()
     msalConfig.auth = appConfig.msal
+
+    // Create the MSAL instance to use for all requests
+
     const msalInstance = new PublicClientApplication(msalConfig)
+
+    // Grab a reference to identity store which we will update using these functions
 
     const identityStore = useIdentityStore()
 
