@@ -29,24 +29,19 @@ function logout()
     <h2>AppId: {{ appConfig.msal.clientId }}</h2>
     <h2>URL: {{ appConfig.msal.redirectUri }}</h2>
 
-    <ClientOnly fallback-tag="span">
-        <BaseDropDown class="mb-3">
-            <template v-slot:trigger="slotProps">
-                <button v-bind="slotProps" class="btn btn-secondary" data-bs-toggle="dropdown" type="button" >
-                    Login tester
-                </button>                
-            </template>
+    <BaseDropDown class="mb-3">
+        <template #trigger>
+            <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                Account
+            </button>            
+        </template>
+        <template #default>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" @click="login">Log in</a></li>
                 <li><a class="dropdown-item" @click="logout">Log out</a></li>
             </ul>
-        </BaseDropDown>
-        <template #fallback>
-            <button class="btn btn-secondary dropdown-toggle" type="button">
-                Login tester
-            </button>
         </template>
-    </ClientOnly>
+    </BaseDropDown>
 
     <div v-if="identityStore.account">
         <p>Name: {{ identityStore.account.username }}</p>
