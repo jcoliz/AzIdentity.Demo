@@ -8,20 +8,20 @@ const appConfig = useAppConfig()
 <template>
     <BasePageHeader>Status</BasePageHeader>
 
-    <h3>Application Identity</h3>
+    <BaseSectionHeader>Application Identity</BaseSectionHeader>
     <ul>
         <li><strong>AppId</strong>: {{ appConfig.msal.clientId }}</li>
         <li><strong>URL</strong>: {{ appConfig.msal.redirectUri }}</li>
     </ul>
 
-    <h3>Logged-in Account</h3>
+    <BaseSectionHeader>Logged-in Account</BaseSectionHeader>
 
     <ul v-if="identityStore.account">
         <li v-for="[key, value] in Object.entries(identityStore.account)" :key="key">{{ key }}: {{ value }}</li>
     </ul>
     <p v-else>Not logged in</p>
 
-    <h3>Auth Token</h3>
+    <BaseSectionHeader>Auth Token</BaseSectionHeader>
 
     <ul v-if="identityStore.claims">
         <li v-for="[key, value] in identityStore.claims" :key="key">{{ key }}: {{ value }}</li>
