@@ -1,75 +1,11 @@
-# Nuxt Minimal Starter
+# Azure Identity Demo
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is a 'starter kit' for demo samples which need to operate against an M365 tenant.
+For future projects, I can fork this and add application-specific logic.
 
-## Setup
+## Technology
 
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+* Built with [Nuxt](https://nuxt.com/)
+* Deployed as an [Azure Static Web App](https://nuxt.com/deploy/azure)
+* Logs in with [Microsoft Identity Platform](https://learn.microsoft.com/en-us/entra/identity-platform/scenario-spa-sign-in?tabs=javascript2)
+* Uses [@azure/msal-browser](https://www.npmjs.com/package/%40azure/msal-browser) package to manage this
