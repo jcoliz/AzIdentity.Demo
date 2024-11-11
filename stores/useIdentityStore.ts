@@ -8,6 +8,7 @@ import { type AccountInfo } from "@azure/msal-browser"
 export const useIdentityStore = defineStore('identity', () => {
     const account = ref<AccountInfo|undefined>()
     const profile = ref<Map<string,any>|void>()
+    const claims = ref<[string,any][]|undefined>()
   
-    return { account, profile }
+    return { account, profile, claims }
   })

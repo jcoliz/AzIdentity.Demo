@@ -26,9 +26,6 @@ function logout()
 <template>
     <h1>Home</h1>
 
-    <h2>AppId: {{ appConfig.msal.clientId }}</h2>
-    <h2>URL: {{ appConfig.msal.redirectUri }}</h2>
-
     <BaseDropDown class="mb-3">
         <template #trigger>
             <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" type="button" aria-expanded="false">

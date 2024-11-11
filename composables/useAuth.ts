@@ -95,8 +95,9 @@ export function useMsalAuth() {
                 if (response)
                 {
                     const me = await callMSGraph("https://graph.microsoft.com/v1.0/me", response.accessToken);
+                    identityStore.claims = Object.entries(response.idTokenClaims)
                     console.log("getProfile: OK", me)
-                    return Object.entries(me)    
+                    return Object.entries(me)
                 }
             }).catch((error:any) => {
                 console.error("getProfile: ERROR", error);
