@@ -4,6 +4,8 @@ import BaseDropDown from '~/components/BaseDropDown.vue';
 const auth = useMsalAuth()
 const identityStore = useIdentityStore()
 
+const appConfig = useAppConfig()
+
 onMounted(()=>{
     auth.initialize()
 })
@@ -23,6 +25,9 @@ function logout()
 
 <template>
     <h1>Home</h1>
+
+    <h2>AppId: {{ appConfig.msal.clientId }}</h2>
+    <h2>URL: {{ appConfig.msal.redirectUri }}</h2>
 
     <ClientOnly fallback-tag="span">
         <BaseDropDown class="mb-3">
