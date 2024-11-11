@@ -17,3 +17,9 @@
         </ClientOnly>
     </div>
 </template>
+<style scoped>
+:deep(a)
+{
+    cursor: pointer;
+}
+</style>
