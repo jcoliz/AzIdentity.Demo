@@ -1,4 +1,4 @@
-import { Client } from '@microsoft/microsoft-graph-client'
+import { Client, GraphError } from '@microsoft/microsoft-graph-client'
 import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser'
 import { type User } from '@microsoft/microsoft-graph-types'
 import { InteractionType, PublicClientApplication, type AccountInfo } from '@azure/msal-browser';
@@ -45,18 +45,30 @@ export function useGraphClient() {
         return result;
     }
 
-    async function getUserPhoto(): Promise<Blob> {        
+    async function getUserPhoto(): Promise<Blob|undefined> {        
         ensureClient();
 
-        // TODO: Allow other sizes as a parameter
-        const result:Blob = await graphClient.value!.api('/me/photos/48x48/$value')
-            // Consider: Only retrieve the specific fields needed
-            //.select('displayName,mail,mailboxSettings,userPrincipalName')
-            .get();
+        try
+        {
+            // TODO: Allow other sizes as a parameter
+            const result:Blob = await graphClient.value!.api('/me/photos/48x48/$value')
+                // Consider: Only retrieve the specific fields needed
+                //.select('displayName,mail,mailboxSettings,userPrincipalName')
+                .get();
 
-        console.log("getUserPhoto: OK", result)
+            console.log("getUserPhoto: OK", result)
 
-        return result
+            return result
+        }
+        catch(error)
+        {
+            if (error instanceof GraphError && error.statusCode == 404)
+            {
+                console.log("getUserPhoto: No photo found")
+                return undefined
+            }
+            throw error
+        }
     }
     
     return { initialize, getUser, getUserPhoto }

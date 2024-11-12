@@ -1,7 +1,7 @@
 // https://github.com/Shivanik97/msal-auth-vue/blob/main/src/config/useAuth.ts
 
 import { msalConfig, graphScopes } from '@/config/msalConfig'
-import { PublicClientApplication, InteractionRequiredAuthError, type AuthenticationResult } from "@azure/msal-browser"
+import { PublicClientApplication, type AuthenticationResult } from "@azure/msal-browser"
 import { useGraphClient } from './useGraphClient'
 
 export function useMsalAuth() {
@@ -71,7 +71,7 @@ export function useMsalAuth() {
             });
     }
 
-    // TODO: Think more about the tight coupling between auth, graph, and identitystore
+    // TODO: Think more about the tight coupling between auth, graph, identitystore, and the components which call login/logout
 
     // Get users' info and store in identitystore
     async function getProfile(): Promise<void> {
@@ -97,14 +97,13 @@ export function useMsalAuth() {
         });
     };
 
-
     // Get the users' photo and store in identitystore
     async function getUserPhoto(): Promise<void> {
 
         graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read" ])
 
         identityStore.photo = await graphClient.getUserPhoto()
-            .then(blobToBase64)
+            .then((result:Blob|undefined) => result ? blobToBase64(result) : undefined)
             .catch((error:any) => {
                 console.error("getUserPhoto: ERROR", error)
                 return undefined

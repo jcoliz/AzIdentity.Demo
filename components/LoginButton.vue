@@ -13,7 +13,8 @@ onMounted(()=>{
 async function login()
 {
     await auth.login()
-    identityStore.profile = await auth.getProfile()
+    await auth.getProfile()
+    await auth.getUserPhoto()
 }
 
 </script>

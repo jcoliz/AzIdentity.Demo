@@ -14,7 +14,7 @@ async function login()
 {
     await auth.login()
     await auth.getProfile()
-    await auth.getUserPhoto();
+    await auth.getUserPhoto()
 }
 
 function logout()

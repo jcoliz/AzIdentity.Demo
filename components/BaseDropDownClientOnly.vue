@@ -20,11 +20,12 @@ onMounted(()=>{
         const node = nodes[0];
         const el = node.el as HTMLElement;
         toggleEl.value = el;
-        console.log("el:", el)
 
         if (toggleEl.value && ! Dropdown.getInstance(toggleEl.value))
         {
-            dropdown.value = new Dropdown(toggleEl.value);        
+            dropdown.value = new Dropdown(toggleEl.value);
+            // TODO: This is never fired??
+            console.log("dropdown element:", el)
         }
     }
 })

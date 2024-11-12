@@ -8,7 +8,7 @@ import { type User } from '@microsoft/microsoft-graph-types'
 
 export const useIdentityStore = defineStore('identity', () => {
     const account = ref<AccountInfo|undefined>()
-    const profile = ref<User|void>()
+    const profile = ref<User|undefined>()
     const claims = ref<[string,any][]|undefined>()
     const photo = ref<string|undefined>()
   
