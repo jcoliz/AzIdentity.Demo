@@ -24,7 +24,7 @@ function logout()
 
 </script>
 <template>
-    <BaseDropDown class="ms-2 my-1">
+    <BaseDropDown class="ms-2 my-1 d-flex align-items-middle">
         <template #trigger>
             <a class="d-flex align-items-center link-body-emphasis text-decoration-none p-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <template v-if="identityStore.account">

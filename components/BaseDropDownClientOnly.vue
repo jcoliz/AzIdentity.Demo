@@ -31,7 +31,7 @@ onMounted(()=>{
 
 </script>
 <template>
-    <div data-test-id="test-comp-client">
+    <div data-test-id="test-comp-client" class="d-flex">
         <slot name="trigger"/>
         <slot/>
     </div>    
