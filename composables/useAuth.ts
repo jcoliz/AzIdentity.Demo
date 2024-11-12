@@ -3,7 +3,6 @@
 import { msalConfig, graphScopes } from '@/config/msalConfig'
 import { PublicClientApplication, InteractionRequiredAuthError, type AuthenticationResult } from "@azure/msal-browser"
 import { useGraphClient } from './useGraphClient'
-import { type User } from '@microsoft/microsoft-graph-types'
 
 export function useMsalAuth() {
 
@@ -80,9 +79,7 @@ export function useMsalAuth() {
         graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read" ])
 
         identityStore.profile = await graphClient.getUser()
-            .then((user:User) => {
-                return Object.entries(user)
-            }).catch((error:any) => {
+            .catch((error:any) => {
                 identityStore.claims = undefined
                 console.error("getProfile: ERROR", error)
                 return undefined

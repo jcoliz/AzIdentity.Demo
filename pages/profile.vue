@@ -1,12 +1,16 @@
 <script setup lang="ts">
 const identityStore = useIdentityStore()
+
+const userProperties = computed(()=>
+    identityStore.profile ? Object.entries(identityStore.profile) : undefined    
+)
 </script>
 
 <template>
     <div v-if="identityStore.account">
         <BasePageHeader>{{ identityStore.account.name }}</BasePageHeader>
-        <ul v-if="identityStore.profile">
-            <li v-for="[key, value] in identityStore.profile" :key="key">{{ key }}: {{ value }}</li>
+        <ul v-if="userProperties">
+            <li v-for="[key, value] in userProperties" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
         </ul>
         <LogoutButton/>
     </div>
