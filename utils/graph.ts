@@ -43,8 +43,15 @@ export async function callMSGraphImage(endpoint:string, token:string): Promise<s
     return fetch(endpoint, options)
         .then(async (response:any) => {
             console.log("callMSGraphImage: OK", response.status)
-            const blob = await response.blob()
-            return await blobToBase64(blob) 
+            if (response.status < 400)
+            {
+                const blob = await response.blob()
+                return await blobToBase64(blob)     
+            }
+            else
+            {
+                return undefined;
+            }
         })
         .catch((error:any) => {
             console.log("callMSGraphImage: ERROR", error)
