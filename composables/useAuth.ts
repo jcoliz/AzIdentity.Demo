@@ -3,6 +3,7 @@
 import { msalConfig, graphScopes } from '@/config/msalConfig'
 import { PublicClientApplication, type AuthenticationResult } from "@azure/msal-browser"
 import { useGraphClient } from './useGraphClient'
+import { type User } from '@microsoft/microsoft-graph-types'
 
 export function useMsalAuth() {
 
@@ -24,7 +25,7 @@ export function useMsalAuth() {
     const graphClient = useGraphClient();
 
     async function initialize(): Promise<void> {
-        msalInstance.initialize()
+        await msalInstance.initialize()
             .then(()=> {
                 console.log("initialize: OK")
             })
@@ -76,6 +77,7 @@ export function useMsalAuth() {
     // Get users' info and store in identitystore
     async function getProfile(): Promise<void> {
 
+        // So awkward having this in here!!
         graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read" ])
 
         identityStore.profile = await graphClient.getUser()
@@ -110,5 +112,18 @@ export function useMsalAuth() {
             });
     }
 
-    return { initialize, login, logout, getProfile, getUserPhoto }
+    async function getAllUsers(): Promise<User[]|undefined> {
+        graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read.All" ])
+
+        return await graphClient.getAllUsers()
+            .catch(error =>{
+                console.log("getAllUsers: ERROR", error)
+                return undefined
+            })
+    }
+
+    // TODO: This is really spaghetti externalizing the msalInstance
+    // but graphclient needs it. Need to work out properly the dependency
+    // between these two
+    return { initialize, login, logout, getProfile, getUserPhoto, getAllUsers }
 }

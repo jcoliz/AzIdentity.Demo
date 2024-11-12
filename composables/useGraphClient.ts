@@ -45,6 +45,22 @@ export function useGraphClient() {
         return result;
     }
 
+    // Note you'll need "User.Read.All" before calling this. Either get it at sign in
+    // or initialize it before calling. 
+    async function getAllUsers(): Promise<User[]|undefined> {
+        ensureClient();
+        
+        // Return the /me API endpoint result as a User object
+        const result:any = await graphClient.value!.api('/users')
+            // Consider: Only retrieve the specific fields needed
+            .select('displayName,mail,id,userPrincipalName,jobTitle')
+            .get();
+
+        console.log("getAllUsers: OK", result.value)
+
+        return result.value;
+    }
+
     async function getUserPhoto(): Promise<Blob|undefined> {        
         ensureClient();
 
@@ -71,5 +87,5 @@ export function useGraphClient() {
         }
     }
     
-    return { initialize, getUser, getUserPhoto }
+    return { initialize, getUser, getAllUsers, getUserPhoto }
 }
