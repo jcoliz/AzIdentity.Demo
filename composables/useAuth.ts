@@ -2,6 +2,8 @@
 
 import { msalConfig, graphScopes } from '@/config/msalConfig'
 import { PublicClientApplication, InteractionRequiredAuthError, type AuthenticationResult } from "@azure/msal-browser"
+import { useGraphClient } from './useGraphClient'
+import { type User } from '@microsoft/microsoft-graph-types'
 
 export function useMsalAuth() {
 
@@ -17,6 +19,10 @@ export function useMsalAuth() {
     // Grab a reference to identity store which we will update using these functions
 
     const identityStore = useIdentityStore()
+
+    // Use the Graph Client
+
+    const graphClient = useGraphClient();
 
     async function initialize(): Promise<void> {
         msalInstance.initialize()
@@ -38,7 +44,7 @@ export function useMsalAuth() {
         await msalInstance.loginPopup({ scopes: graphScopes })
             .then((result:AuthenticationResult)=> {
                 console.log("AuthenticationResult: OK")
-                identityStore.account = result.account        
+                identityStore.account = result.account 
             })
             .catch((error:any) => {
                 console.error("loginPopup", error)
@@ -96,22 +102,12 @@ export function useMsalAuth() {
     // TODO: These graph calls need to be moved out to own file
     async function getProfile(): Promise<void> {
 
-        const tokenRequest = {
-            scopes: ["User.Read"],
-            forceRefresh: false, // Set this to "true" to skip a cached token and go to the server to get a new token
-            account: identityStore.account
-        };
-    
-        return getTokenPopup(tokenRequest)
-            .then(async (response:AuthenticationResult|void): Promise<any> => {
-                if (response)
-                {
-                    identityStore.claims = Object.entries(response.idTokenClaims)
+        graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read" ])
 
-                    const me = await callMSGraph("https://graph.microsoft.com/v1.0/me", response.accessToken);
-                    console.log("getProfile: OK", me)
-                    identityStore.profile = Object.entries(me)
-                }
+        graphClient.getUser()
+            .then((user:User) => {
+                console.log("getProfile: OK", user)
+                identityStore.profile = Object.entries(user)
             }).catch((error:any) => {
                 identityStore.claims = undefined
                 identityStore.profile = undefined
