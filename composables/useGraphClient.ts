@@ -35,13 +35,29 @@ export function useGraphClient() {
         ensureClient();
         
         // Return the /me API endpoint result as a User object
-        const user: User = await graphClient.value!.api('/me')
+        const result:User = await graphClient.value!.api('/me')
             // Consider: Only retrieve the specific fields needed
             //.select('displayName,mail,mailboxSettings,userPrincipalName')
             .get();
-        
-        return user;
+
+        console.log("getUser: OK", result)
+
+        return result;
+    }
+
+    async function getUserPhoto(): Promise<Blob> {        
+        ensureClient();
+
+        // TODO: Allow other sizes as a parameter
+        const result:Blob = await graphClient.value!.api('/me/photos/48x48/$value')
+            // Consider: Only retrieve the specific fields needed
+            //.select('displayName,mail,mailboxSettings,userPrincipalName')
+            .get();
+
+        console.log("getUserPhoto: OK", result)
+
+        return result
     }
     
-    return { initialize, getUser }
+    return { initialize, getUser, getUserPhoto }
 }

@@ -72,69 +72,46 @@ export function useMsalAuth() {
             });
     }
 
-    async function getTokenPopup(request:any): Promise<AuthenticationResult|void> {
+    // TODO: Think more about the tight coupling between auth, graph, and identitystore
 
-        /**
-         * See here for more info on account retrieval: 
-         * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-common/docs/Accounts.md
-         */ 
-
-        return await msalInstance.acquireTokenSilent(request)
-            .catch((error:any) => {
-                console.log("silent token acquisition fails. acquiring token using popup");
-
-                if (error instanceof InteractionRequiredAuthError) {
-
-                    // fallback to interaction when silent call fails
-                    return msalInstance.acquireTokenPopup(request)
-                        .then((tokenResponse:AuthenticationResult) => {
-                            console.log("acquireTokenPopup: OK", tokenResponse);
-                            return tokenResponse;
-                        }).catch((error:any) => {
-                            console.error("acquireTokenPopup: ERROR", error);
-                        });
-                } else {
-                    console.warn(error)
-                }
-        });
-    }
-     
-    // TODO: These graph calls need to be moved out to own file
+    // Get users' info and store in identitystore
     async function getProfile(): Promise<void> {
 
         graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read" ])
 
-        graphClient.getUser()
+        identityStore.profile = await graphClient.getUser()
             .then((user:User) => {
-                console.log("getProfile: OK", user)
-                identityStore.profile = Object.entries(user)
+                return Object.entries(user)
             }).catch((error:any) => {
                 identityStore.claims = undefined
-                identityStore.profile = undefined
                 console.error("getProfile: ERROR", error)
+                return undefined
             });
     }
+
+    // https://stackoverflow.com/questions/18650168/convert-blob-to-base64
+    const blobToBase64 = (blob:Blob):Promise<string> => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        return new Promise(resolve => {
+            reader.onloadend = () => {
+            resolve(reader.result as string);
+            };
+        });
+    };
+
 
     // Get the users' photo and store in identitystore
     async function getUserPhoto(): Promise<void> {
 
-        const tokenRequest = {
-            scopes: ["User.Read"],
-            forceRefresh: false, // Set this to "true" to skip a cached token and go to the server to get a new token
-            account: identityStore.account
-        };
-    
-        getTokenPopup(tokenRequest)
-            .then(async (response:AuthenticationResult|void): Promise<string|void> => {
-                if (response)
-                {
-                    const imageData = await callMSGraphImage("https://graph.microsoft.com/v1.0/me/photos/48x48/$value", response.accessToken);
-                    identityStore.photo = imageData
-                }
-            }).catch((error:any) => {
-                identityStore.photo = undefined
-                console.error("getUserPhoto: ERROR", error);
-            });                 
+        graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read" ])
+
+        identityStore.photo = await graphClient.getUserPhoto()
+            .then(blobToBase64)
+            .catch((error:any) => {
+                console.error("getUserPhoto: ERROR", error)
+                return undefined
+            });
     }
 
     return { initialize, login, logout, getProfile, getUserPhoto }
