@@ -55,14 +55,17 @@ export function useGraphClient() {
         ensureClient();
         
         // Return the /me API endpoint result as a User object
-        const result:any = await graphClient.value!.api('/users')
-            // Consider: Only retrieve the specific fields needed
+        return await graphClient.value!.api('/users')
             .select('displayName,mail,id,userPrincipalName,jobTitle')
-            .get();
-
-        console.log("getAllUsers: OK", result.value)
-
-        return result.value;
+            .get()
+            .then(result=> { 
+                console.log("getAllUsers: OK", result.value)
+                return result.value 
+            })
+            .catch(error => {
+                console.log("getAllUsers: ERROR", error)
+                return undefined
+            })
     }
 
     async function getUserPhoto(): Promise<Blob|undefined> {        

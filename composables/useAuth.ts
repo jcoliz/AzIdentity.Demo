@@ -98,18 +98,8 @@ export function useMsalAuth() {
             });
     }
 
-    async function getAllUsers(): Promise<User[]|undefined> {
-        graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read.All" ])
-
-        return await graphClient.getAllUsers()
-            .catch(error =>{
-                console.log("getAllUsers: ERROR", error)
-                return undefined
-            })
-    }
-
     // TODO: This is really spaghetti externalizing the msalInstance
     // but graphclient needs it. Need to work out properly the dependency
     // between these two
-    return { initialize, login, logout, getUserPhoto, getAllUsers, msalInstance }
+    return { initialize, login, logout, getUserPhoto, msalInstance }
 }
