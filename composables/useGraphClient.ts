@@ -74,7 +74,7 @@ export function useGraphClient() {
         reader.readAsDataURL(blob);
         return new Promise(resolve => {
             reader.onloadend = () => {
-            resolve(reader.result as string);
+                resolve(reader.result as string);
             };
         });
     };
@@ -84,14 +84,12 @@ export function useGraphClient() {
 
         // TODO: Allow other sizes as a parameter
         return await graphClient.value!.api('/me/photos/48x48/$value')
-            // Consider: Only retrieve the specific fields needed
-            //.select('displayName,mail,mailboxSettings,userPrincipalName')
             .get()
-            .then((result:Blob|undefined) => { 
+            .then((result:Blob) => { 
                 console.log("getUserPhoto: OK", result)
-                return result ? blobToBase64(result) : undefined 
+                return blobToBase64(result)
             })
-            .catch((error:any) => {
+            .catch(error => {
                 if (error instanceof GraphError && error.statusCode == 404)
                 {
                     console.log("getUserPhoto: No photo found")
@@ -101,8 +99,7 @@ export function useGraphClient() {
                     console.error("getUserPhoto: ERROR", error)
                 }
                 return undefined
-            });
-    
+            });    
     }
     
     return { initialize, getUser, getAllUsers, getUserPhoto }
