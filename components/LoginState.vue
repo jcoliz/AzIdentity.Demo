@@ -17,8 +17,7 @@ async function login()
 
     graphClient.initialize(auth.msalInstance, identityStore.account!, [ "User.Read" ])
     identityStore.profile = await graphClient.getUser();
-
-    await auth.getUserPhoto()
+    identityStore.photo = await graphClient.getUserPhoto();
 }
 
 function logout()

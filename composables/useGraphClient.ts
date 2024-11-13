@@ -68,30 +68,41 @@ export function useGraphClient() {
             })
     }
 
-    async function getUserPhoto(): Promise<Blob|undefined> {        
+    // https://stackoverflow.com/questions/18650168/convert-blob-to-base64
+    const blobToBase64 = (blob:Blob):Promise<string> => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        return new Promise(resolve => {
+            reader.onloadend = () => {
+            resolve(reader.result as string);
+            };
+        });
+    };
+    
+    async function getUserPhoto(): Promise<string|undefined> {        
         ensureClient();
 
-        try
-        {
-            // TODO: Allow other sizes as a parameter
-            const result:Blob = await graphClient.value!.api('/me/photos/48x48/$value')
-                // Consider: Only retrieve the specific fields needed
-                //.select('displayName,mail,mailboxSettings,userPrincipalName')
-                .get();
-
-            console.log("getUserPhoto: OK", result)
-
-            return result
-        }
-        catch(error)
-        {
-            if (error instanceof GraphError && error.statusCode == 404)
-            {
-                console.log("getUserPhoto: No photo found")
+        // TODO: Allow other sizes as a parameter
+        return await graphClient.value!.api('/me/photos/48x48/$value')
+            // Consider: Only retrieve the specific fields needed
+            //.select('displayName,mail,mailboxSettings,userPrincipalName')
+            .get()
+            .then((result:Blob|undefined) => { 
+                console.log("getUserPhoto: OK", result)
+                return result ? blobToBase64(result) : undefined 
+            })
+            .catch((error:any) => {
+                if (error instanceof GraphError && error.statusCode == 404)
+                {
+                    console.log("getUserPhoto: No photo found")
+                }
+                else
+                {
+                    console.error("getUserPhoto: ERROR", error)
+                }
                 return undefined
-            }
-            throw error
-        }
+            });
+    
     }
     
     return { initialize, getUser, getAllUsers, getUserPhoto }
