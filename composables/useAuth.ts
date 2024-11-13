@@ -2,8 +2,6 @@
 
 import { msalConfig, graphScopes } from '@/config/msalConfig'
 import { PublicClientApplication, type AuthenticationResult } from "@azure/msal-browser"
-import { useGraphClient } from './useGraphClient'
-import { type User } from '@microsoft/microsoft-graph-types'
 
 export function useMsalAuth() {
 
@@ -19,10 +17,6 @@ export function useMsalAuth() {
     // Grab a reference to identity store which we will update using these functions
 
     const identityStore = useIdentityStore()
-
-    // Use the Graph Client
-
-    const graphClient = useGraphClient();
 
     async function initialize(): Promise<void> {
         await msalInstance.initialize()
