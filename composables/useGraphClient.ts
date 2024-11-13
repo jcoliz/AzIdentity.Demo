@@ -31,18 +31,22 @@ export function useGraphClient() {
         )
     }
 
-    async function getUser(): Promise<User> {
+    async function getUser(): Promise<User|undefined> {
         ensureClient();
         
         // Return the /me API endpoint result as a User object
-        const result:User = await graphClient.value!.api('/me')
+        return await graphClient.value!.api('/me')
             // Consider: Only retrieve the specific fields needed
             //.select('displayName,mail,mailboxSettings,userPrincipalName')
-            .get();
-
-        console.log("getUser: OK", result)
-
-        return result;
+            .get()
+            .then(result=> { 
+                console.log("getUser: OK", result)
+                return result 
+            })
+            .catch((error:any) => {
+                console.error("getUser: ERROR", error)
+                return undefined
+            });
     }
 
     // Note you'll need "User.Read.All" before calling this. Either get it at sign in

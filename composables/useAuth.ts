@@ -74,20 +74,6 @@ export function useMsalAuth() {
 
     // TODO: Think more about the tight coupling between auth, graph, identitystore, and the components which call login/logout
 
-    // Get users' info and store in identitystore
-    async function getProfile(): Promise<void> {
-
-        // So awkward having this in here!!
-        graphClient.initialize(msalInstance, identityStore.account!, [ "User.Read" ])
-
-        identityStore.profile = await graphClient.getUser()
-            .catch((error:any) => {
-                identityStore.claims = undefined
-                console.error("getProfile: ERROR", error)
-                return undefined
-            });
-    }
-
     // https://stackoverflow.com/questions/18650168/convert-blob-to-base64
     const blobToBase64 = (blob:Blob):Promise<string> => {
         const reader = new FileReader();
@@ -125,5 +111,5 @@ export function useMsalAuth() {
     // TODO: This is really spaghetti externalizing the msalInstance
     // but graphclient needs it. Need to work out properly the dependency
     // between these two
-    return { initialize, login, logout, getProfile, getUserPhoto, getAllUsers }
+    return { initialize, login, logout, getUserPhoto, getAllUsers, msalInstance }
 }

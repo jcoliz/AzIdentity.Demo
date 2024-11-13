@@ -5,7 +5,8 @@
 
 const auth = useMsalAuth()
 const identityStore = useIdentityStore()
- 
+const graphClient = useGraphClient()
+
 onMounted(()=>{
     auth.initialize()
 })
@@ -13,7 +14,10 @@ onMounted(()=>{
 async function login()
 {
     await auth.login()
-    await auth.getProfile()
+
+    graphClient.initialize(auth.msalInstance, identityStore.account!, [ "User.Read" ])
+    identityStore.profile = await graphClient.getUser();
+
     await auth.getUserPhoto()
 }
 
