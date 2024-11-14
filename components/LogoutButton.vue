@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import * as auth from '@/utils/msalAuth'
 
-const auth = useMsalAuth()
 const router = useRouter()
-
-onMounted(()=>{
-    auth.initialize()
-})
+const identityStore = useIdentityStore()
 
 async function logout()
 {
-    await auth.logout()
-    router.push("/")
+    try
+    {
+        identityStore.clear()
+        await auth.logout()
+        router.push("/")
+    }
+    catch (error)
+    {
+        console.error("logout(): ERROR", error)
+    }    
 }
 
 </script>
