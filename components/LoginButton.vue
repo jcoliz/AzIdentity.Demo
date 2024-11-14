@@ -1,33 +1,6 @@
 <script setup lang="ts">
-import * as auth from '@/utils/msalAuth'
-import * as graph from '@/utils/graphClient'
-
-//
-// Display logged in state, and present options for logging in/out
-//
-
-const identityStore = useIdentityStore()
-
-async function login()
-{
-    try
-    {
-        const loginResult = await auth.login()
-        identityStore.account = loginResult.account
-
-        const instance = await auth.getInstance()
-        graph.initialize(instance, identityStore.account!, [ "User.Read" ])
-        identityStore.profile = await graph.getUser();
-        identityStore.photo = await graph.getUserPhoto();
-    }
-    catch (error)
-    {
-        console.error("login(): ERROR", error)
-        identityStore.clear()
-    }
-}
-
+import login from '@/utils/login'
 </script>
 <template>
-    <button class="btn btn-primary" @click="login">Login</button>
+    <BaseButton visual="primary" @click="login">Login</BaseButton>
 </template>
