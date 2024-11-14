@@ -8,7 +8,7 @@ interface AppDbSchema extends DBSchema {
         tenant: string
         user: User
       }
-      indexes: { 'tenant': string }
+      indexes: { 'tenant': string, 'tid': string[], 'tname': string[] }
     }
   }
 
@@ -16,13 +16,15 @@ let appDb: IDBPDatabase<AppDbSchema>|undefined = undefined;
 
 async function initialize()
 {
-    appDb = await openDB<AppDbSchema>("azidentity.demo", 2, {
+    appDb = await openDB<AppDbSchema>("azidentity.demo", 3, {
         upgrade(db)
         {
             const userStore = db.createObjectStore('tenantUsers', { autoIncrement: true })
             userStore.createIndex('tenant', 'tenant')
+            userStore.createIndex('tid', ['tenant', 'user.id'])
+            userStore.createIndex('tname', ['tenant', 'user.displayName'])
         }
-    })     
+    })
 }
 
 export async function updateDbUsers(tenant:string, users:User[]) {
@@ -68,7 +70,15 @@ export async function getDbusers(tenant:string): Promise<User[]> {
         console.error("updateDbUsers(): DB not ready, client?", isclient)
         return [];
     }
-    
-    const found = await appDb.getAllFromIndex('tenantUsers','tenant',tenant)
+
+    // We want all users in this tenant, sorted by displayName 
+    const lowerBound = [tenant, ''];
+    const upperBound = [tenant, 'zzz'];
+    const range = IDBKeyRange.bound(lowerBound, upperBound);
+
+    const transaction = appDb.transaction(["tenantUsers"], "readwrite");
+    const objectStore = transaction.objectStore("tenantUsers");
+    const index = objectStore.index("tname")
+    const found = await index.getAll( range )
     return found.map(x=>x.user)
 }
