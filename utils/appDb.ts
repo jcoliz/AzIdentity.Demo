@@ -28,13 +28,12 @@ async function initialize()
 export async function updateDbUsers(tenant:string, users:User[]) {
     console.log("update() #items", users.length)
 
-    if (!appDb && import.meta.client)
-    {
-        initialize()
+    if (!appDb && import.meta.client) {
+        await initialize()
     }
 
-    if (!appDb)
-    {
+    if (!appDb) {
+        console.error("updateDbUsers(): DB not ready")
         return;
     }
 
@@ -47,29 +46,28 @@ export async function updateDbUsers(tenant:string, users:User[]) {
     for await (const cursor of index.iterate()) {
         cursor.delete();
     }
-
-    await transaction.done
     
     // Add new users
-    const addTx = appDb.transaction(["tenantUsers"], "readwrite");
-    const addStore = addTx.objectStore("tenantUsers")
+
     for (const user of users) {
-        await addStore.add({ tenant, user })
+        await objectStore.add({ tenant, user })
     }
-    await addTx.done
+
+    // And commit it
+    await transaction.done
 }
 
 export async function getDbusers(tenant:string): Promise<User[]> {
 
-    if (!appDb && import.meta.client)
-        {
-            initialize()
-        }
+    const isclient = import.meta.client
+    if (!appDb && isclient) {
+        await initialize()
+    }
     
-        if (!appDb)
-        {
-            return [];
-        }
+    if (!appDb) {
+        console.error("updateDbUsers(): DB not ready, client?", isclient)
+        return [];
+    }
     
     const found = await appDb.getAllFromIndex('tenantUsers','tenant',tenant)
     return found.map(x=>x.user)
