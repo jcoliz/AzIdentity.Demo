@@ -72,13 +72,10 @@ export async function getDbusers(tenant:string): Promise<User[]> {
     }
 
     // We want all users in this tenant, sorted by displayName 
+    // https://stackoverflow.com/questions/50802268/sort-by-and-filter-by-a-different-column-in-an-indexeddb-object-store
     const lowerBound = [tenant, ''];
     const upperBound = [tenant, 'zzz'];
     const range = IDBKeyRange.bound(lowerBound, upperBound);
-
-    const transaction = appDb.transaction(["tenantUsers"], "readwrite");
-    const objectStore = transaction.objectStore("tenantUsers");
-    const index = objectStore.index("tname")
-    const found = await index.getAll( range )
+    const found = await appDb.getAllFromIndex('tenantUsers', 'tname', range)
     return found.map(x=>x.user)
 }
