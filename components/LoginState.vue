@@ -1,27 +1,7 @@
 <script setup lang="ts">
-import * as auth from '@/utils/msalAuth'
-import login from '@/utils/login'
-
-//
-// Display logged in state, and present options for logging in/out
-//
-
 const identityStore = useIdentityStore()
-
-async function logout()
-{
-    try
-    {
-        identityStore.clear()
-        await auth.logout()
-    }
-    catch (error)
-    {
-        console.error("logout(): ERROR", error)
-    }    
-}
-
 </script>
+
 <template>
     <BaseDropDown class="ms-2 my-1 d-flex align-items-middle">
         <template #trigger>
@@ -38,10 +18,10 @@ async function logout()
                 <template v-if="identityStore.account">
                     <li><RouterLink class="dropdown-item" to="/profile" >Profile</RouterLink></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" @click="logout()" >Sign out</a></li>
+                    <li><a class="dropdown-item" @click="systemLogout" >Sign out</a></li>
                 </template>
                 <template v-else>
-                    <li><a class="dropdown-item" @click="login()" >Log in</a></li>
+                    <li><a class="dropdown-item" @click="systemLogin" >Log in</a></li>
                 </template>
             </ul>
         </template>

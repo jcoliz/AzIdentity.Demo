@@ -20,7 +20,5 @@ defineProps<{
   <button
     class="btn"
     :class="`btn-${visual}`"
-  >
-    <slot />
-  </button>
+  ><slot /></button>
 </template>
