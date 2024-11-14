@@ -16,6 +16,7 @@
     "@types/bootstrap": "^5.2.10",
     "bootstrap": "^5.3.3",
     "feather-icons": "^4.29.2",
+    "idb": "^8.0.0",
     "nuxt": "^3.13.2",
     "pinia": "^2.2.6",
     "popper": "^1.0.1",

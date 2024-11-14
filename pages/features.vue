@@ -6,17 +6,47 @@ const identityStore = useIdentityStore()
 
 const users = ref<User[]|undefined>()
 
-async function getAllUsers()
+async function getAllGraphUsers()
 {
     try
     {
-        users.value = await graph.getAllUsers()
+        if (!identityStore.account) {
+            return
+        }
+
+        const newusers = await graph.getAllUsers()
+        console.log("getAllUsers(): OK received", newusers.length)
+
+        await updateDbUsers(identityStore.account.tenantId,newusers)
+        await fetchDbUsers()            
     }
     catch (error)
     {
         console.error("getAllUsers(): ERROR", error)
     }   
 }
+
+async function fetchDbUsers()
+{
+    if (!identityStore.account) {
+        return
+    }
+
+    const dbUsers = await getDbusers(identityStore.account.tenantId)
+    console.log("fetchDbUsers(): OK found", dbUsers.length)
+
+    users.value = dbUsers
+}
+
+onMounted(()=>fetchDbUsers())
+
+// https://stackoverflow.com/questions/74688514/watch-value-in-vue-js-3-equivalent-in-pinia
+const accountCp = computed(()=>identityStore.account)
+watch(accountCp, (val)=>{
+    console.log("watch: Using tenant",val?.tenantId ?? 'none', identityStore.account)
+    fetchDbUsers()
+})
+
 </script>
 
 <template>
@@ -36,7 +66,7 @@ async function getAllUsers()
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Tame</th>
+                        <th>Title</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,11 +77,11 @@ async function getAllUsers()
                     </tr>
                 </tbody>
             </table>
-            <BaseButton visual="secondary" @click="getAllUsers">Refresh</BaseButton>
+            <BaseButton visual="secondary" @click="getAllGraphUsers">Refresh</BaseButton>
         </div>
         <div v-else>
             <p>If you have sufficient privelages, you can list out all the users in your tenant.</p>
-            <BaseButton visual="primary" @click="getAllUsers">Retrieve</BaseButton>
+            <BaseButton visual="primary" @click="getAllGraphUsers">Retrieve</BaseButton>
         </div>
     </div>
 
