@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-
-const router = useRouter()
-
 async function logout()
 {
     await systemLogout()
-    router.push("/")
+    useRouter().push("/")
 }
 </script>
 

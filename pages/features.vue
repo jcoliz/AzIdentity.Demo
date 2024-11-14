@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type User } from '@microsoft/microsoft-graph-types'
-import * as auth from '@/utils/msalAuth'
 import * as graph from '@/utils/graphClient'
 
 const identityStore = useIdentityStore()
@@ -11,8 +10,6 @@ async function getAllUsers()
 {
     try
     {
-        const instance = await auth.getInstance()
-        graph.initialize(instance, identityStore.account!, [ "User.Read.All" ])
         users.value = await graph.getAllUsers()
     }
     catch (error)

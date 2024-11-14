@@ -1,7 +1,8 @@
 import { Client, GraphError } from '@microsoft/microsoft-graph-client'
 import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser'
 import { type User } from '@microsoft/microsoft-graph-types'
-import { InteractionType, PublicClientApplication, type AccountInfo } from '@azure/msal-browser';
+import { InteractionType } from '@azure/msal-browser';
+import * as auth from '@/utils/msalAuth'
 
 let authProvider: AuthCodeMSALBrowserAuthenticationProvider|undefined = undefined
 let graphClient: Client|undefined = undefined
@@ -17,10 +18,17 @@ function ensureClient() {
     }
 }
 
-export function initialize(auth: PublicClientApplication, account: AccountInfo, scopes: string[])
+async function initialize(scopes: string[])
 {
+    const instance = await auth.getInstance()
+    const account = instance.getActiveAccount()
+
+    if (!account) {
+        throw Error("No active account set")        
+    }
+
     authProvider = new AuthCodeMSALBrowserAuthenticationProvider(
-        auth,
+        instance,
         {
             account,
             scopes,
@@ -30,6 +38,7 @@ export function initialize(auth: PublicClientApplication, account: AccountInfo, 
 }
 
 export async function getUser(): Promise<User> {
+    await initialize([ "User.Read" ])
     ensureClient();
     
     // Return the /me API endpoint result as a User object
@@ -42,6 +51,7 @@ export async function getUser(): Promise<User> {
 // Note you'll need "User.Read.All" before calling this. Either get it at sign in
 // or initialize it before calling. 
 export async function getAllUsers(): Promise<User[]> {
+    await initialize([ "User.Read" ])
     ensureClient();
     
     // Return the /me API endpoint result as a User object
@@ -63,6 +73,7 @@ const blobToBase64 = (blob:Blob):Promise<string> => {
 };
     
 export async function getUserPhoto(): Promise<string|undefined> {
+    await initialize([ "User.Read.All" ])
     ensureClient();
 
     // TODO: Allow other sizes as a parameter

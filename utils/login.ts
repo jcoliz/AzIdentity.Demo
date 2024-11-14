@@ -9,9 +9,6 @@ export async function systemLogin()
     {
         const loginResult = await auth.login()
         identityStore.account = loginResult.account
-
-        const instance = await auth.getInstance()
-        graph.initialize(instance, identityStore.account, [ "User.Read" ])
         identityStore.profile = await graph.getUser();
         identityStore.photo = await graph.getUserPhoto();
     }

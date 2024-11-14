@@ -4,12 +4,12 @@ export async function systemLogout()
 {
     try
     {
-        const identityStore = useIdentityStore()
-        identityStore.clear()
         await auth.logout()
     }
     catch (error)
     {
         console.error("systemLogout(): ERROR", error)
     }    
+    const identityStore = useIdentityStore()
+    identityStore.clear()
 }

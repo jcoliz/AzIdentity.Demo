@@ -32,7 +32,11 @@ export async function login(): Promise<AuthenticationResult> {
      * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/request-response-object.md#request
      */
     
-    return await msalInstance.loginPopup({ scopes: graphScopes })
+    const result = await msalInstance.loginPopup({ scopes: graphScopes })
+
+    msalInstance.setActiveAccount(result.account)
+
+    return result
 }
 
 export async function logout(): Promise<void> {
@@ -44,6 +48,7 @@ export async function logout(): Promise<void> {
         throw Error("Auth system is not ready")
 
     await msalInstance.logoutPopup()
+    msalInstance.setActiveAccount(null)
 }
 
 export async function getInstance(): Promise<PublicClientApplication>
