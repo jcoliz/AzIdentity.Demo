@@ -105,13 +105,6 @@ watch(accountCp, (val)=>{
         </div>
     </div>
 
-    <!-- TODO: Toasts are always client only. ClientOnly tag needs to be INSIDE the BaseToast. -->
-    <ClientOnly>
-        <BaseToast v-model="errorDisplay.showError.value">
-            <template #title>ERROR</template>
-            <template #default>
-                {{ errorDisplay.errorDetails }}
-            </template>
-        </BaseToast>
-    </ClientOnly>
+    <ErrorToast/>
+
 </template>
