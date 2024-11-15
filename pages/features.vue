@@ -22,6 +22,8 @@ async function getAllGraphUsers()
     try
     {
         if (!identityStore.account) {
+            // This is an error condition becasue this should only be called by
+            // UI which is displayed when user is logged in
             throw Error("Not logged in")
         }
 
@@ -42,7 +44,9 @@ async function fetchDbUsers()
     try
     {
         if (!identityStore.account) {
-            throw Error("Not logged in")
+            // Note that this is not an error condition
+            users.value = []
+            return
         }
 
         const dbUsers = await getDbusers(identityStore.account.tenantId)
