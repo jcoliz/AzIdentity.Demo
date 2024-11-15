@@ -15,7 +15,7 @@ const errorDisplay = useErrorDisplay()
 /**
  * The list of users we are displaying
  */
-const users = ref<User[]|undefined>()
+const users = ref<User[]>([])
 
 async function getAllGraphUsers()
 {
@@ -80,7 +80,7 @@ watch(accountCp, (val)=>{
     <div v-else>
         <p>This page presents a number of additional things you can do now that you are logged in.</p>
         <BaseSectionHeader>All Tenant Users</BaseSectionHeader>
-        <div v-if="users">
+        <div v-if="users.length">
             <table class="table">
                 <thead>
                     <tr>
