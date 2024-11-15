@@ -5,6 +5,7 @@
             <article class="container">
                 <slot/>
             </article>
+            <ErrorToast/>
         </main>
     </div>
 </template>

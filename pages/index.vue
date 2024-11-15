@@ -20,5 +20,4 @@ const identityStore = useIdentityStore()
             <PageCard to="/about" title="About" link-text="Learn more" :details="['Information about this app', 'Complete feature set', 'Link to source code']"/>
         </div>
     </div>
-
 </template>

@@ -56,7 +56,7 @@ async function fetchDbUsers()
     }
 }
 
-onMounted(()=>fetchDbUsers())
+onMounted(fetchDbUsers)
 
 // https://stackoverflow.com/questions/74688514/watch-value-in-vue-js-3-equivalent-in-pinia
 const accountCp = computed(()=>identityStore.account)
@@ -104,7 +104,4 @@ watch(accountCp, (val)=>{
             <BaseButton visual="primary" @click="getAllGraphUsers">Retrieve</BaseButton>
         </div>
     </div>
-
-    <ErrorToast/>
-
 </template>

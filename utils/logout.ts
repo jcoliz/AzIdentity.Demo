@@ -1,5 +1,7 @@
 import * as auth from '@/utils/msalAuth'
 
+const errorDisplay = useErrorDisplay()
+
 export async function systemLogout()
 {
     try
@@ -8,7 +10,7 @@ export async function systemLogout()
     }
     catch (error)
     {
-        console.error("systemLogout(): ERROR", error)
+        errorDisplay.setError(`systemLogout(): ${error}`)
     }    
     const identityStore = useIdentityStore()
     identityStore.clear()

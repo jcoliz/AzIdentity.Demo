@@ -1,6 +1,8 @@
 import * as auth from '@/utils/msalAuth'
 import * as graph from '@/utils/graphClient'
 
+const errorDisplay = useErrorDisplay()
+
 export async function systemLogin()
 {
     const identityStore = useIdentityStore()
@@ -14,7 +16,7 @@ export async function systemLogin()
     }
     catch (error)
     {
-        console.error("systemLogin(): ERROR", error)
+        errorDisplay.setError(`systemLogin(): ${error}`)
         identityStore.clear()
     }
 }
