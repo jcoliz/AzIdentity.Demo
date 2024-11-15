@@ -47,6 +47,8 @@ watch(accountCp, (val)=>{
     fetchDbUsers()
 })
 
+const showToast=ref(false)
+
 </script>
 
 <template>
@@ -85,4 +87,8 @@ watch(accountCp, (val)=>{
         </div>
     </div>
 
+    <ClientOnly>
+        <BaseButton class="mt-2" visual="secondary" @click="showToast = true">Show Toast</BaseButton>
+        <BaseToast v-model="showToast"/>
+    </ClientOnly>
 </template>
