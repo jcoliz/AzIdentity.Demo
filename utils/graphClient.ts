@@ -51,7 +51,7 @@ export async function getUser(): Promise<User> {
 // Note you'll need "User.Read.All" before calling this. Either get it at sign in
 // or initialize it before calling. 
 export async function getAllUsers(): Promise<User[]> {
-    await initialize([ "User.Read" ])
+    await initialize([ "User.Read.All" ])
     ensureClient();
     
     // Return the /me API endpoint result as a User object
@@ -73,7 +73,7 @@ const blobToBase64 = (blob:Blob):Promise<string> => {
 };
     
 export async function getUserPhoto(): Promise<string|undefined> {
-    await initialize([ "User.Read.All" ])
+    await initialize([ "User.Read" ])
     ensureClient();
 
     // TODO: Allow other sizes as a parameter
