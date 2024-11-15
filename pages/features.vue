@@ -6,11 +6,20 @@ const identityStore = useIdentityStore()
 
 const users = ref<User[]|undefined>()
 
+// TODO: We need to surface errors from the login button as well
+// This will require moving this logic to a composable
+// Then could also make an ErrorToast component which surfaced
+// these errors in a consistent way
+const showError = ref(false)
+const errorDetails = ref<string|undefined>()
+
 async function getAllGraphUsers()
 {
     try
     {
         if (!identityStore.account) {
+            errorDetails.value = "Not logged in"
+            showError.value = true
             return
         }
 
@@ -23,19 +32,34 @@ async function getAllGraphUsers()
     catch (error)
     {
         console.error("getAllUsers(): ERROR", error)
-    }   
+
+        errorDetails.value = `getAllUsers(): ${error}`
+        showError.value = true
+    }
 }
 
 async function fetchDbUsers()
 {
-    if (!identityStore.account) {
-        return
+    try
+    {
+        if (!identityStore.account) {
+            errorDetails.value = "Not logged in"
+                showError.value = true
+                return
+        }
+
+        const dbUsers = await getDbusers(identityStore.account.tenantId)
+        console.log("fetchDbUsers(): OK found", dbUsers.length)
+
+        users.value = dbUsers
     }
+    catch (error)
+    {
+        console.error("fetchDbUsers(): ERROR", error)
 
-    const dbUsers = await getDbusers(identityStore.account.tenantId)
-    console.log("fetchDbUsers(): OK found", dbUsers.length)
-
-    users.value = dbUsers
+        errorDetails.value = `fetchDbUsers(): ${error}`
+        showError.value = true
+    }
 }
 
 onMounted(()=>fetchDbUsers())
@@ -44,10 +68,10 @@ onMounted(()=>fetchDbUsers())
 const accountCp = computed(()=>identityStore.account)
 watch(accountCp, (val)=>{
     console.log("watch: Using tenant",val?.tenantId ?? 'none', identityStore.account)
+
+    // When the tenant changes, we'll need to get an updated list of users
     fetchDbUsers()
 })
-
-const showToast=ref(false)
 
 </script>
 
@@ -87,11 +111,12 @@ const showToast=ref(false)
         </div>
     </div>
 
+    <!-- TODO: Toasts are always client only. ClientOnly tag needs to be INSIDE the BaseToast. -->
     <ClientOnly>
-        <BaseButton class="mt-2" visual="secondary" @click="showToast = true">Show Toast</BaseButton>
-        <BaseToast v-model="showToast">
+        <BaseToast v-model="showError">
+            <template #title>ERROR</template>
             <template #default>
-                This is a test
+                {{ errorDetails }}
             </template>
         </BaseToast>
     </ClientOnly>
