@@ -2,25 +2,27 @@
 import { type User } from '@microsoft/microsoft-graph-types'
 import * as graph from '@/utils/graphClient'
 
+/**
+ * Details about logged-in user
+ */
 const identityStore = useIdentityStore()
 
-const users = ref<User[]|undefined>()
+/**
+ * Where to display errors
+ */
+const errorDisplay = useErrorDisplay()
 
-// TODO: We need to surface errors from the login button as well
-// This will require moving this logic to a composable
-// Then could also make an ErrorToast component which surfaced
-// these errors in a consistent way
-const showError = ref(false)
-const errorDetails = ref<string|undefined>()
+/**
+ * The list of users we are displaying
+ */
+const users = ref<User[]|undefined>()
 
 async function getAllGraphUsers()
 {
     try
     {
         if (!identityStore.account) {
-            errorDetails.value = "Not logged in"
-            showError.value = true
-            return
+            throw Error("Not logged in")
         }
 
         const newusers = await graph.getAllUsers()
@@ -31,10 +33,7 @@ async function getAllGraphUsers()
     }
     catch (error)
     {
-        console.error("getAllUsers(): ERROR", error)
-
-        errorDetails.value = `getAllUsers(): ${error}`
-        showError.value = true
+        errorDisplay.setError(`getAllUsers(): ${error}`)
     }
 }
 
@@ -43,9 +42,7 @@ async function fetchDbUsers()
     try
     {
         if (!identityStore.account) {
-            errorDetails.value = "Not logged in"
-                showError.value = true
-                return
+            throw Error("Not logged in")
         }
 
         const dbUsers = await getDbusers(identityStore.account.tenantId)
@@ -55,10 +52,7 @@ async function fetchDbUsers()
     }
     catch (error)
     {
-        console.error("fetchDbUsers(): ERROR", error)
-
-        errorDetails.value = `fetchDbUsers(): ${error}`
-        showError.value = true
+        errorDisplay.setError(`fetchDbUsers(): ${error}`)
     }
 }
 
@@ -113,10 +107,10 @@ watch(accountCp, (val)=>{
 
     <!-- TODO: Toasts are always client only. ClientOnly tag needs to be INSIDE the BaseToast. -->
     <ClientOnly>
-        <BaseToast v-model="showError">
+        <BaseToast v-model="errorDisplay.showError.value">
             <template #title>ERROR</template>
             <template #default>
-                {{ errorDetails }}
+                {{ errorDisplay.errorDetails }}
             </template>
         </BaseToast>
     </ClientOnly>
