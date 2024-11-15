@@ -35,12 +35,12 @@ function close() {
         <div ref="el" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <FeatherIcon class="me-2 mb-1" icon="alert-triangle"/>
-                <strong class="me-auto">Toast Title</strong>
-                <small>Subtitle</small>
+                <strong class="me-auto"><slot name="title">Warning</slot></strong>
+                <small><slot name="subtitle"/></small>
                 <button type="button" class="btn-close" @click="close" aria-label="Close"/>
             </div>
             <div class="toast-body">
-                Hello, world! This is a toast message.
+                <slot/>
             </div>
         </div>    
     </div>

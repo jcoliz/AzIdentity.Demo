@@ -89,6 +89,10 @@ const showToast=ref(false)
 
     <ClientOnly>
         <BaseButton class="mt-2" visual="secondary" @click="showToast = true">Show Toast</BaseButton>
-        <BaseToast v-model="showToast"/>
+        <BaseToast v-model="showToast">
+            <template #default>
+                This is a test
+            </template>
+        </BaseToast>
     </ClientOnly>
 </template>
