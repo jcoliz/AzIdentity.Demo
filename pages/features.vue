@@ -109,3 +109,10 @@ watch(accountCp, (val)=>{
         </div>
     </div>
 </template>
+
+<style scoped>
+tr:hover td {
+    color: var(--bs-light);
+    background-color: var(--bs-primary);
+}
+</style>
