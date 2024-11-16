@@ -3,11 +3,13 @@ import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-
 import { type User } from '@microsoft/microsoft-graph-types'
 import { InteractionType } from '@azure/msal-browser';
 import * as auth from '@/utils/msalAuth'
+import { jwtDecode, type JwtPayload } from "jwt-decode";
 
 async function initialize(scopes: string[]): Promise<Client>
 {
     const instance = await auth.getInstance()
     const account = instance.getActiveAccount()
+    const identity = useIdentityStore()
 
     if (!account) {
         throw Error("No active account set")        
@@ -22,9 +24,15 @@ async function initialize(scopes: string[]): Promise<Client>
         }
     )
 
-    return Client.initWithMiddleware({
+    const result = Client.initWithMiddleware({
         authProvider: authProvider
-    });    
+    })
+
+    const token = await authProvider.getAccessToken()
+    const payload = jwtDecode<JwtPayload>(token);
+    identity.claims = Object.entries(payload)
+
+    return result
 }
 
 export async function getUser(): Promise<User> {

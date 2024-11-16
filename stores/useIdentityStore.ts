@@ -1,7 +1,6 @@
 import { ref } from "vue"
 import { type AccountInfo } from "@azure/msal-browser"
 import { type User } from '@microsoft/microsoft-graph-types'
-import { unescapeLeadingUnderscores } from "typescript"
 
 /**
  * Create the store for global identity details on logged in user

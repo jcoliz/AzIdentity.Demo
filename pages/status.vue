@@ -21,11 +21,11 @@ const appConfig = useAppConfig()
     </ul>
     <p v-else>Not logged in</p>
 
-    <BaseSectionHeader>Auth Token</BaseSectionHeader>
+    <BaseSectionHeader>Auth token claims</BaseSectionHeader>
 
     <ul v-if="identityStore.claims">
         <li v-for="[key, value] in identityStore.claims" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
     </ul>
-    <p v-else>No current token</p>
+    <p v-else>No known claims</p>
 
 </template>
