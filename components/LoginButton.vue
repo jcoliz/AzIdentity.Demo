@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import * as controls from '@coliz/vue-base-controls'
+</script>
 <template>
-    <BaseButton visual="primary" @click="systemLogin">Login</BaseButton>
+    <controls.BaseButton visual="primary" @click="systemLogin">Login</controls.BaseButton>
 </template>
