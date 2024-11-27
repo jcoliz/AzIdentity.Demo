@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^3.27.0",
-    "@coliz/vue-base-controls": "^0.0.2",
+    "@coliz/vue-base-controls": "^0.0.5",
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "@pinia/nuxt": "^0.7.0",
     "@types/bootstrap": "^5.2.10",
