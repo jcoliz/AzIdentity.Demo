@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import * as base from '@coliz/vue-base-controls'
+
 async function logout()
 {
     await systemLogout()
@@ -7,5 +9,5 @@ async function logout()
 </script>
 
 <template>
-    <BaseButton visual="danger" @click="logout">Logout</BaseButton>
+    <base.BaseButton visual="danger" @click="logout">Logout</base.BaseButton>
 </template>
