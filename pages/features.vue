@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type User } from '@microsoft/microsoft-graph-types'
 import * as graph from '@/utils/graphClient'
-import * as controls from '@coliz/vue-base-controls'
+import * as base from '@coliz/vue-base-controls'
 
 /**
  * Details about logged-in user
@@ -106,7 +106,7 @@ watch(accountCp, (val)=>{
         </div>
         <div v-else>
             <p>If you have sufficient privelages, you can list out all the users in your tenant.</p>
-            <controls.BaseButton visual="primary" @click="getAllGraphUsers">Retrieve</controls.BaseButton>
+            <base.BaseButton visual="primary" @click="getAllGraphUsers">Retrieve</base.BaseButton>
         </div>
     </div>
 </template>
