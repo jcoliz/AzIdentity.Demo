@@ -1,9 +1,8 @@
 <script setup lang="ts">
-const router = useRouter()
-const routes = router.getRoutes()
-const displayRoutes = routes
+const displayRoutes = useRouter()
+  .getRoutes()
   .filter(x => x.meta.order)
-  .toSorted((x, y) => (x.meta.order as number) - (y.meta.order as number))
+  .sort((x, y) => (x.meta.order as number) - (y.meta.order as number))
 </script>
 <template>
   <div class="container">
