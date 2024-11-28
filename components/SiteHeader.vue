@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const displayRoutes = useRouter()
-  .getRoutes()
+const router = useRouter()
+const routes = router.getRoutes()
+const displayRoutes = routes
   .filter(x => x.meta.order)
   .toSorted((x, y) => (x.meta.order as number) - (y.meta.order as number))
 </script>
