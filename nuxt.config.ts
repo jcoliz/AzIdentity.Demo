@@ -13,6 +13,14 @@ export default defineNuxtConfig({
     }
   },
 
+  experimental: {
+    defaults: {
+      nuxtLink: {
+        activeClass: 'active'
+      }
+    }
+  },
+
   typescript: {
     typeCheck: true
   },
