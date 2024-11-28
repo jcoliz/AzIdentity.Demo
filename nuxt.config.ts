@@ -25,6 +25,18 @@ export default defineNuxtConfig({
     typeCheck: true
   },
 
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true,
+          silenceDeprecations: ['import'],
+          api: "modern-compiler",
+        },
+      }
+    }
+  },
+
   modules: ['@pinia/nuxt'],
 
   appConfig:
