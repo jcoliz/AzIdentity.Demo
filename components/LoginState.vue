@@ -14,7 +14,8 @@ const identityStore = useIdentityStore()
             </a>
         </template>
         <template #default>
-            <ul class="dropdown-menu text-small shadow" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -34px);" data-popper-placement="top-start">
+            <!-- Note that popper is handling absolute positioning of the drop-down -->
+            <ul class="dropdown-menu text-small shadow" data-popper-placement="top-start">
                 <template v-if="identityStore.account">
                     <li><RouterLink class="dropdown-item" to="/profile" >Profile</RouterLink></li>
                     <li><hr class="dropdown-divider"></li>
