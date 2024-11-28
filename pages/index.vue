@@ -8,7 +8,7 @@ const identityStore = useIdentityStore()
 </script>
 
 <template>
-    <BasePageHeader>Home</BasePageHeader>
+    <RoutePageHeader/>
 
     <p>Welcome to the Azure Identity Demo application</p>
 

@@ -19,7 +19,7 @@ const userProperties = computed(()=>
         <LogoutButton/>
     </div>
     <div v-else>
-        <BasePageHeader>Profile</BasePageHeader>
+        <RoutePageHeader/>
         <p>No user logged in</p>
     </div>
 </template>

@@ -10,7 +10,7 @@ const appConfig = useAppConfig()
 </script>
 
 <template>
-    <BasePageHeader>Status</BasePageHeader>
+    <RoutePageHeader/>
 
     <BaseSectionHeader>Application Identity</BaseSectionHeader>
     <ul>
