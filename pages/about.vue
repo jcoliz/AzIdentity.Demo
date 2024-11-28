@@ -5,6 +5,6 @@ definePageMeta({
 })
 </script>
 <template>
-    <BasePageHeader>About</BasePageHeader>
+    <RoutePageHeader/>
     <ComingSoon/>
 </template>

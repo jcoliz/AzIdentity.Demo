@@ -79,7 +79,7 @@ watch(accountCp, (val)=>{
 </script>
 
 <template>
-    <BasePageHeader>Features</BasePageHeader>
+    <RoutePageHeader/>
 
     <div v-if="!identityStore.account">
         <p>This page presents a number of additional things you can do once you are logged in.</p>
