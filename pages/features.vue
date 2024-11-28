@@ -2,6 +2,11 @@
 import { type User } from '@microsoft/microsoft-graph-types'
 import * as graph from '@/utils/graphClient'
 
+definePageMeta({
+    title: 'Features',
+    order: 3
+})
+
 /**
  * Details about logged-in user
  */

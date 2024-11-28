@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    title: 'Profile'
+})
+
 const identityStore = useIdentityStore()
 
 const userProperties = computed(()=>

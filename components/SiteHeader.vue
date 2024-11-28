@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const displayRoutes = useRouter()
+  .getRoutes()
+  .filter(x => x.meta.order)
+  .toSorted((x, y) => (x.meta.order as number) - (y.meta.order as number))
+</script>
 <template>
     <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -7,10 +13,7 @@
       </RouterLink>
 
       <ul class="nav nav-pills">
-        <RouterLink class="nav-link" to="/">Home</RouterLink>
-        <RouterLink class="nav-link" to="/status">Status</RouterLink>
-        <RouterLink class="nav-link" to="/features">Features</RouterLink>
-        <RouterLink class="nav-link" to="/about">About</RouterLink>
+        <RouterLink v-for="route of displayRoutes" :key="route.meta.order as number" class="nav-link" :to="route.path">{{ route.meta.title }}</RouterLink>
       </ul>
       
       <LoginState/>

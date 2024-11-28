@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    title: 'Status',
+    order: 2
+})
 
 const identityStore = useIdentityStore()
 const appConfig = useAppConfig()
