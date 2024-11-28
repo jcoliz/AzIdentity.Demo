@@ -1,4 +1,9 @@
 <script setup lang="ts">
+definePageMeta({
+    title: 'Home',
+    order: 1
+})
+
 const identityStore = useIdentityStore()
 </script>
 
