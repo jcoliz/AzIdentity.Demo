@@ -12,8 +12,8 @@ importers:
         specifier: ^3.27.0
         version: 3.27.0
       '@coliz/vue-base-controls':
-        specifier: ^0.0.8
-        version: 0.0.8(bootstrap@5.3.3(@popperjs/core@2.11.8))(vue@3.5.12(typescript@5.6.3))
+        specifier: ^0.0.9
+        version: 0.0.9(bootstrap@5.3.3(@popperjs/core@2.11.8))(vue@3.5.12(typescript@5.6.3))
       '@microsoft/microsoft-graph-client':
         specifier: ^3.0.7
         version: 3.0.7(@azure/msal-browser@3.27.0)
@@ -235,8 +235,8 @@ packages:
     resolution: {integrity: sha512-YLPHc8yASwjNkmcDMQMY35yiWjoKAKnhUbPRszBRS0YgH+IXtsMp61j+yTcnCE3oO2DgP0U3iejLC8FTtKDC8Q==}
     engines: {node: '>=16.13'}
 
-  '@coliz/vue-base-controls@0.0.8':
-    resolution: {integrity: sha512-Qh96tg2wySH2BZvnGP9bNff6dTQ2+4JFI/vy56Pc4d6aw8m9D98HKM5kpCbH9fZBSAIDxRp5aju3h9/XOj5P/A==}
+  '@coliz/vue-base-controls@0.0.9':
+    resolution: {integrity: sha512-jbEFaTlqZtROjwFv+EA2ntIpRfaeR98KoJ0AptSxiQqLcuiSf1RmO9P0/XfFcIk2Ou7pIi0M9Dwlu0cvztTACg==}
     peerDependencies:
       bootstrap: '>=5.3.0'
       vue: latest
@@ -5302,7 +5302,7 @@ snapshots:
     dependencies:
       mime: 3.0.0
 
-  '@coliz/vue-base-controls@0.0.8(bootstrap@5.3.3(@popperjs/core@2.11.8))(vue@3.5.12(typescript@5.6.3))':
+  '@coliz/vue-base-controls@0.0.9(bootstrap@5.3.3(@popperjs/core@2.11.8))(vue@3.5.12(typescript@5.6.3))':
     dependencies:
       bootstrap: 5.3.3(@popperjs/core@2.11.8)
       vue: 3.5.12(typescript@5.6.3)

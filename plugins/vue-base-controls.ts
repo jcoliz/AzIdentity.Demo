@@ -1,5 +1,5 @@
-import controls from '@coliz/vue-base-controls'
+import * as controls from '@coliz/vue-base-controls'
 
 export default defineNuxtPlugin(nuxtApp => {
-    nuxtApp.vueApp.use(controls)
+    nuxtApp.vueApp.use(controls.default)
 })
