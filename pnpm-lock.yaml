@@ -12,8 +12,8 @@ importers:
         specifier: ^3.27.0
         version: 3.27.0
       '@coliz/vue-base-controls':
-        specifier: ^0.0.13
-        version: 0.0.13(bootstrap@5.3.3(@popperjs/core@2.11.8))(feather-icons@4.29.2)(vue@3.5.12(typescript@5.6.3))
+        specifier: ^0.0.15
+        version: 0.0.15(bootstrap@5.3.3(@popperjs/core@2.11.8))(feather-icons@4.29.2)(vue@3.5.12(typescript@5.6.3))
       '@microsoft/microsoft-graph-client':
         specifier: ^3.0.7
         version: 3.0.7(@azure/msal-browser@3.27.0)
@@ -235,8 +235,8 @@ packages:
     resolution: {integrity: sha512-YLPHc8yASwjNkmcDMQMY35yiWjoKAKnhUbPRszBRS0YgH+IXtsMp61j+yTcnCE3oO2DgP0U3iejLC8FTtKDC8Q==}
     engines: {node: '>=16.13'}
 
-  '@coliz/vue-base-controls@0.0.13':
-    resolution: {integrity: sha512-EdZFFEW5rrrurkJcfaKy8BLQ4xVzk6FBubmZ1ZdeidZpApPPqbk2GaamPdp/Eh82xeCV08qeIPezffQSYP0Rcw==}
+  '@coliz/vue-base-controls@0.0.15':
+    resolution: {integrity: sha512-YL3kt/ibTOfvcbOL//PZhQN8JIiNJQscBbAv3S0jlTkBzTrzC3VDG246o1lyzl998utovjnbPHAobtE7k8npVQ==}
     peerDependencies:
       bootstrap: ^5.3.0
       feather-icons: ^4.29.2
@@ -5303,7 +5303,7 @@ snapshots:
     dependencies:
       mime: 3.0.0
 
-  '@coliz/vue-base-controls@0.0.13(bootstrap@5.3.3(@popperjs/core@2.11.8))(feather-icons@4.29.2)(vue@3.5.12(typescript@5.6.3))':
+  '@coliz/vue-base-controls@0.0.15(bootstrap@5.3.3(@popperjs/core@2.11.8))(feather-icons@4.29.2)(vue@3.5.12(typescript@5.6.3))':
     dependencies:
       bootstrap: 5.3.3(@popperjs/core@2.11.8)
       feather-icons: 4.29.2
