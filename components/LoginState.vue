@@ -3,7 +3,7 @@ const identityStore = useIdentityStore()
 </script>
 
 <template>
-    <BaseDropDown class="ms-2 my-1 d-flex align-items-middle">
+    <DropDownPortable class="ms-2 my-1 d-flex align-items-middle">
         <template #trigger>
             <a class="d-flex align-items-center link-body-emphasis text-decoration-none p-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <template v-if="identityStore.account">
@@ -17,7 +17,7 @@ const identityStore = useIdentityStore()
             <!-- Note that popper is handling absolute positioning of the drop-down -->
             <ul class="dropdown-menu dropdown-menu-end text-small shadow">
                 <template v-if="identityStore.account">
-                    <li><RouterLink class="dropdown-item" to="/profile" >Profile</RouterLink></li>
+                    <li><NuxtLink class="dropdown-item" to="/profile" >Profile</NuxtLink></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" @click="systemLogout" >Sign out</a></li>
                 </template>
@@ -26,5 +26,5 @@ const identityStore = useIdentityStore()
                 </template>
             </ul>
         </template>
-    </BaseDropDown>
+    </DropDownPortable>
 </template>

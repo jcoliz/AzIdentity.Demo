@@ -1,14 +1,14 @@
 <template>
     <div>
         <ClientOnly>        
-            <BaseDropDownClientOnly>
+            <DropDownClientOnly>
                 <template #trigger>
                     <slot name="trigger"/>
                 </template>
                 <template #default>
                     <slot/>
                 </template>
-            </BaseDropDownClientOnly>
+            </DropDownClientOnly>
             <template #fallback>
                 <div>
                     <slot name="trigger"/>
