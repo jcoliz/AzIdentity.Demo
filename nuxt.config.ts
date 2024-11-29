@@ -41,6 +41,7 @@ export default defineNuxtConfig({
 
   appConfig:
   {
+    name: "AzIdentity.Demo",
     msal: {
       clientId: process.env.ENTRA_APP_ID ?? '', // This is the ONLY mandatory field that you need to supply.
       authority: 'https://login.microsoftonline.com/organizations', // Replace the placeholder with your tenant subdomain        
