@@ -1,8 +1,10 @@
 <script setup lang="ts">
-//
-// NOTE: This component can only be used client-side. Be sure to wrap it in
-// <ClientOnly>
-//
+/**
+ * Bootstrap drop-down
+ * 
+ * This component can only be used client-side. Be sure to wrap it in
+ * <ClientOnly>
+ */
 
 import { Dropdown } from 'bootstrap';
 import { useSlots, ref, onMounted } from "vue"
@@ -32,7 +34,7 @@ onMounted(()=>{
 
 </script>
 <template>
-    <div data-test-id="test-comp-client" class="d-flex">
+    <div class="dropdown d-flex">
         <slot name="trigger"/>
         <slot/>
     </div>    

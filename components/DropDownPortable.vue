@@ -1,3 +1,12 @@
+<script setup lang="ts">
+/**
+ * Portable drop-down, suitable for server or client rendering
+ * 
+ * Bootstrap dropdowns only work on client rendering. So to render
+ * then on server, we show only the trigger, but do not set up the
+ * interactive logic.
+ */
+</script>
 <template>
     <div>
         <ClientOnly>        
