@@ -9,8 +9,6 @@ const identityStore = useIdentityStore()
 
 <template>
     <PageMain>
-        <RoutePageHeader/>
-
         <p>Welcome to the Azure Identity Demo application</p>
 
         <div v-if="!identityStore.account">

@@ -11,26 +11,28 @@ const appConfig = useAppConfig()
 
 <template>
     <PageMain>
-        <RoutePageHeader/>
+        <section>
+            <BaseSectionHeader>Application Identity</BaseSectionHeader>
+            <ul>
+                <li><strong>AppId</strong>: {{ appConfig.msal.clientId }}</li>
+                <li><strong>URL</strong>: {{ appConfig.msal.redirectUri }}</li>
+            </ul>
+        </section>
 
-        <BaseSectionHeader>Application Identity</BaseSectionHeader>
-        <ul>
-            <li><strong>AppId</strong>: {{ appConfig.msal.clientId }}</li>
-            <li><strong>URL</strong>: {{ appConfig.msal.redirectUri }}</li>
-        </ul>
+        <section>
+            <BaseSectionHeader>Logged-in Account</BaseSectionHeader>
+            <ul v-if="identityStore.account">
+                <li v-for="[key, value] in Object.entries(identityStore.account)" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
+            </ul>
+            <p v-else>Not logged in</p>
+        </section>
 
-        <BaseSectionHeader>Logged-in Account</BaseSectionHeader>
-
-        <ul v-if="identityStore.account">
-            <li v-for="[key, value] in Object.entries(identityStore.account)" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
-        </ul>
-        <p v-else>Not logged in</p>
-
-        <BaseSectionHeader>Auth token claims</BaseSectionHeader>
-
-        <ul v-if="identityStore.claims">
-            <li v-for="[key, value] in identityStore.claims" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
-        </ul>
-        <p v-else>No known claims</p>
+        <section>
+            <BaseSectionHeader>Auth token claims</BaseSectionHeader>
+            <ul v-if="identityStore.claims">
+                <li v-for="[key, value] in identityStore.claims" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
+            </ul>
+            <p v-else>No known claims</p>
+        </section>
     </PageMain>
 </template>
