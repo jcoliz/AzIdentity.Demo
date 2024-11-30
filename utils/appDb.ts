@@ -16,7 +16,9 @@ let appDb: IDBPDatabase<AppDbSchema>|undefined = undefined;
 
 async function initialize()
 {
-    appDb = await openDB<AppDbSchema>("azidentity.demo", 3, {
+    const appConfig = useAppConfig()
+
+    appDb = await openDB<AppDbSchema>(appConfig.name, 3, {
         upgrade(db)
         {
             const userStore = db.createObjectStore('tenantUsers', { autoIncrement: true })
