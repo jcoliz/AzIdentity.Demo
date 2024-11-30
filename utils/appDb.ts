@@ -1,5 +1,5 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-import { type User } from '@microsoft/microsoft-graph-types'
+import type { User } from '@microsoft/microsoft-graph-types'
 
 interface AppDbSchema extends DBSchema {
     tenantUsers: {

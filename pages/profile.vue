@@ -11,15 +11,17 @@ const userProperties = computed(()=>
 </script>
 
 <template>
-    <div v-if="identityStore.account">
-        <BasePageHeader>{{ identityStore.account.name }}</BasePageHeader>
-        <ul v-if="userProperties">
-            <li v-for="[key, value] in userProperties" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
-        </ul>
-        <LogoutButton/>
-    </div>
-    <div v-else>
-        <RoutePageHeader/>
-        <p>No user logged in</p>
+    <div>
+        <div v-if="identityStore.account">
+            <BasePageHeader>{{ identityStore.account.name }}</BasePageHeader>
+            <ul v-if="userProperties">
+                <li v-for="[key, value] in userProperties" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
+            </ul>
+            <LogoutButton/>
+        </div>
+        <div v-else>
+            <RoutePageHeader/>
+            <p>No user logged in</p>
+        </div>
     </div>
 </template>

@@ -2,8 +2,6 @@
 /**
  * Standardized display of icons from `feather-icons`
  */
-import { computed } from "vue"
-import { icons, type FeatherIconNames } from "feather-icons"
 
 const props = defineProps<{
   /**

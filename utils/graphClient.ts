@@ -1,6 +1,6 @@
 import { Client, GraphError } from '@microsoft/microsoft-graph-client'
 import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser'
-import { type User } from '@microsoft/microsoft-graph-types'
+import type { User } from '@microsoft/microsoft-graph-types'
 import { InteractionType } from '@azure/msal-browser';
 import * as auth from '@/utils/msalAuth'
 import { jwtDecode, type JwtPayload } from "jwt-decode";
