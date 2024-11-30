@@ -11,7 +11,7 @@ const userProperties = computed(()=>
 </script>
 
 <template>
-    <div>
+    <main class="container">
         <div v-if="identityStore.account">
             <BasePageHeader>{{ identityStore.account.name }}</BasePageHeader>
             <ul v-if="userProperties">
@@ -23,5 +23,5 @@ const userProperties = computed(()=>
             <RoutePageHeader/>
             <p>No user logged in</p>
         </div>
-    </div>
+    </main>
 </template>

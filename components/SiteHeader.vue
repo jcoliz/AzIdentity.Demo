@@ -6,7 +6,7 @@ const displayRoutes = useRouter()
   .sort((x, y) => (x.meta.order as number) - (y.meta.order as number))
 </script>
 <template>
-  <div class="container">
+  <div class="container" data-test-id="site-header">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <NuxtLink to="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <FeatherIcon icon="users" size="32"/>

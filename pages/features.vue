@@ -79,7 +79,7 @@ watch(accountCp, (val)=>{
 </script>
 
 <template>
-    <div>
+    <main class="container">
         <RoutePageHeader/>
 
         <div v-if="!identityStore.account">
@@ -114,8 +114,7 @@ watch(accountCp, (val)=>{
                 <BaseButton visual="primary" @click="getAllGraphUsers">Retrieve</BaseButton>
             </div>
         </div>
-
-    </div>
+    </main>
 </template>
 
 <style scoped>
