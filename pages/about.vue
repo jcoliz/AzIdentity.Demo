@@ -5,8 +5,8 @@ definePageMeta({
 })
 </script>
 <template>
-    <main class="container">
+    <PageMain>
         <RoutePageHeader/>
         <ComingSoon/>
-    </main>
+    </PageMain>
 </template>

@@ -10,7 +10,7 @@ const appConfig = useAppConfig()
 </script>
 
 <template>
-    <main class="container">
+    <PageMain>
         <RoutePageHeader/>
 
         <BaseSectionHeader>Application Identity</BaseSectionHeader>
@@ -32,5 +32,5 @@ const appConfig = useAppConfig()
             <li v-for="[key, value] in identityStore.claims" :key="key"><strong>{{ key }}</strong>: {{ value }}</li>
         </ul>
         <p v-else>No known claims</p>
-    </main>
+    </PageMain>
 </template>

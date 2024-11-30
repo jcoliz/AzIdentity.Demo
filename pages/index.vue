@@ -8,7 +8,7 @@ const identityStore = useIdentityStore()
 </script>
 
 <template>
-    <main class="container">
+    <PageMain>
         <RoutePageHeader/>
 
         <p>Welcome to the Azure Identity Demo application</p>
@@ -26,5 +26,5 @@ const identityStore = useIdentityStore()
                 <PageCard to="/about" title="About" link-text="Learn more" :details="['Information about this app', 'Complete feature set', 'Link to source code']"/>
             </div>
         </div>
-    </main>
+    </PageMain>
 </template>
